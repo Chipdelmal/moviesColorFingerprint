@@ -1,4 +1,5 @@
-
+# https://github.com/kkroening/ffmpeg-python/blob/master/examples/README.md#convert-video-to-numpy-array
+# https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.cluster.vq.kmeans.html
 
 import ffmpeg
 import numpy as np
@@ -28,3 +29,6 @@ video = (
     .frombuffer(out, np.uint8)
     .reshape([-1, height, width, 3])
 )
+
+
+video[0][0][1]
