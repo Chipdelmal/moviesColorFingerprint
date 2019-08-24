@@ -16,8 +16,8 @@ from io import BytesIO
 from sklearn.cluster import KMeans
 from matplotlib import pyplot as plt
 
-
-(FILE_NAME, DOMINANT, STEPS) = ('./videos/in.mp4', 10, 100)
+(FILE, IN_PATH, OUT_PATH) = ('spiritedAway.mp4', './videos/', './out/')
+(FILE_NAME, DOMINANT, STEPS) = (IN_PATH + FILE, 25, 250)
 probe = ffmpeg.probe(FILE_NAME)
 
 vInfo = next(s for s in probe['streams'] if s['codec_type'] == 'video')
@@ -29,6 +29,7 @@ out, err = (
     ffmpeg
     .input(FILE_NAME)
     .output('pipe:', format='rawvideo', pix_fmt='rgb24')
+    .global_args('-loglevel', 'error')
     .run(capture_stdout=True)
 )
 video = (
@@ -46,8 +47,13 @@ for frame in range(1, framesNum, round(framesNum/STEPS)):
     kmeans = KMeans(n_clusters=DOMINANT).fit(flatFrame)
     palette = kmeans.cluster_centers_
     rescale = [rescaleColor(color) for color in palette]
-    clusters.append(rescale)
+    clusters.append(sorted(rescale))
 
 plt.imshow(list(map(list, zip(*clusters))))
 plt.axis('off')
-plt.savefig('./out/signature.png', bbox_inches='tight')
+plt.savefig(
+    OUT_PATH + FILE.split('.')[0] + '.png',
+    bbox_inches='tight',
+    dpi=1000,
+    pad_inches=0
+)
