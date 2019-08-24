@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 
 
 # User Inputs
-(FILE, DOMINANT) = ("SpiritedAway", 20)
+(FILE, NAME, DOMINANT) = ("SpiritedAway", "Spirited Away", 20)
 (IN_PATH, OUT_PATH, DPI) = ("./temp/", "./out/", 1000)
 FONT = aux.defineFont(
     fontName='Uroob', size=20, alpha=.6, color='white'
@@ -42,7 +42,7 @@ plt.savefig(
     pad_inches=0
 )
 plt.text(
-    .5, .5-.1, "Spirited Away", fontdict=FONT,
+    .5, .5-.1, NAME, fontdict=FONT,
     horizontalalignment='center', verticalalignment='center',
     transform=ax.transAxes
 )

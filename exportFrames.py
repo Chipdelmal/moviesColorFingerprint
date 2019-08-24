@@ -2,8 +2,8 @@
 import os
 import ffmpeg
 
-FILE = "PrincessMononoke.mp4"
-(IN_PATH, OUT_PATH, FRAMES) = ("./in/", "./temp/", 500)
+FILE = "SpiritedAway.mp4"
+(IN_PATH, OUT_PATH, FRAMES) = ("./in/", "./temp/", 1000)
 
 # Calculating fps to match required number of frames
 probe = ffmpeg.probe(IN_PATH + FILE)
