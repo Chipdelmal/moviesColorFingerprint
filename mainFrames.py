@@ -32,7 +32,6 @@ plt.imshow(list(map(list, zip(*clusters))))
 plt.axis('off')
 plt.savefig(
     OUT_PATH + FILE.split('.')[0] + '.png',
-    bbox_inches='tight',
-    dpi=DPI,
+    bbox_inches='tight', dpi=DPI,
     pad_inches=0
 )
