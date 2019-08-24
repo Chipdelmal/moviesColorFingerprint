@@ -1,6 +1,11 @@
+# ############################################################################
+# Color Fingerprint: rescaleMovie.py
+#   This auxiliary script rescales a movie using ffmpeg
+# ############################################################################
+
 import os
 
-(FILE_NAME, IN_PATH, OUT_PATH) = ('nausicaa.mp4', './in/', './out/')
+(FILE_NAME, IN_PATH, OUT_PATH) = ('SpiritedAway.mp4', './original/', './in/')
 (width, height) = (640, 320)
 
 os.system(

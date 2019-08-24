@@ -1,25 +1,29 @@
+# ############################################################################
+# Color Fingerprint
+#   This routine parses a movie and clusters colors found at every
+#       predetermined number of frames to export the dominant palette
+#       throughout the movie.
+# ############################################################################
 # https://github.com/kkroening/ffmpeg-python/blob/master/examples/README.md#convert-video-to-numpy-array
-# https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.cluster.vq.kmeans.html
+# https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
+# ############################################################################
 
 import ffmpeg
 import numpy as np
 from sklearn.cluster import KMeans
 from matplotlib import pyplot as plt
 
+# User inputs
+(FILE, IN_PATH, OUT_PATH) = ('PrincessMononoke.mp4', './in/', './out/')
+(FILE_NAME, DOMINANT, STEPS, DPI) = (IN_PATH + FILE, 20, 500, 1000)
 
-def rescaleColor(colorEightBit):
-    return [i / 255 for i in colorEightBit]
-
-
-(FILE, IN_PATH, OUT_PATH) = ('nausicaa.mp4', './in/', './out/')
-(FILE_NAME, DOMINANT, STEPS) = (IN_PATH + FILE, 25, 500)
+# Get video information
 probe = ffmpeg.probe(FILE_NAME)
-
 vInfo = next(s for s in probe['streams'] if s['codec_type'] == 'video')
 (width, height) = [int(vInfo[s]) for s in ['width', 'height']]
 framesNum = int(vInfo['nb_frames'])
-framesNum
 
+# Parse frames into a numpy array
 out, err = (
     ffmpeg
     .input(FILE_NAME)
@@ -33,6 +37,7 @@ video = (
     .reshape([-1, height, width, 3])
 )
 
+# Cluster the pixels in frames
 clusters = []
 for frame in range(1, framesNum, round(framesNum/STEPS)):
     if frame % 50 == 0:
@@ -43,14 +48,15 @@ for frame in range(1, framesNum, round(framesNum/STEPS)):
             flatFrame.append(list(col))
     kmeans = KMeans(n_clusters=DOMINANT).fit(flatFrame)
     palette = kmeans.cluster_centers_
-    rescale = [rescaleColor(color) for color in palette]
+    rescale = [aux.rescaleColor(color) for color in palette]
     clusters.append(sorted(rescale))
 
+# Export the resulting fingerprint
 plt.imshow(list(map(list, zip(*clusters))))
 plt.axis('off')
 plt.savefig(
     OUT_PATH + FILE.split('.')[0] + '.png',
     bbox_inches='tight',
-    dpi=1000,
+    dpi=DPI,
     pad_inches=0
 )
