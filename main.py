@@ -1,23 +1,18 @@
 # https://github.com/kkroening/ffmpeg-python/blob/master/examples/README.md#convert-video-to-numpy-array
 # https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.cluster.vq.kmeans.html
 
+import ffmpeg
+import numpy as np
+from sklearn.cluster import KMeans
+from matplotlib import pyplot as plt
+
+
 def rescaleColor(colorEightBit):
     return [i / 255 for i in colorEightBit]
 
 
-import ffmpeg
-import numpy as np
-import scipy
-import scipy.misc
-import scipy.cluster
-from PIL import Image
-from skimage import io
-from io import BytesIO
-from sklearn.cluster import KMeans
-from matplotlib import pyplot as plt
-
-(FILE, IN_PATH, OUT_PATH) = ('spiritedAway.mp4', './videos/', './out/')
-(FILE_NAME, DOMINANT, STEPS) = (IN_PATH + FILE, 25, 250)
+(FILE, IN_PATH, OUT_PATH) = ('nausicaa.mp4', './in/', './out/')
+(FILE_NAME, DOMINANT, STEPS) = (IN_PATH + FILE, 25, 500)
 probe = ffmpeg.probe(FILE_NAME)
 
 vInfo = next(s for s in probe['streams'] if s['codec_type'] == 'video')
@@ -40,6 +35,8 @@ video = (
 
 clusters = []
 for frame in range(1, framesNum, round(framesNum/STEPS)):
+    if frame % 50 == 0:
+        print("Frame " + str(frame/framesNum))
     flatFrame = []
     for row in video[frame]:
         for col in row:
