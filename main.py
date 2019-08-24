@@ -8,6 +8,7 @@
 # https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
 # ############################################################################
 
+import aux
 import ffmpeg
 import numpy as np
 from sklearn.cluster import KMeans
@@ -40,7 +41,7 @@ video = (
 # Cluster the pixels in frames
 clusters = []
 for frame in range(1, framesNum, round(framesNum/STEPS)):
-    if frame % 50 == 0:
+    if frame % 100 == 0:
         print("Frame " + str(frame/framesNum))
     flatFrame = []
     for row in video[frame]:
