@@ -9,7 +9,10 @@ FILE = "PrincessMononoke.mp4"
 probe = ffmpeg.probe(IN_PATH + FILE)
 vInfo = next(s for s in probe['streams'] if s['codec_type'] == 'video')
 framesNum = int(vInfo['nb_frames'])
-fps = FRAMES / framesNum
+framerate = eval(vInfo['avg_frame_rate'])
+fps = FRAMES / framesNum * framerate
+
+
 
 # Export frames
 os.system(
