@@ -10,7 +10,7 @@ from matplotlib import pyplot as plt
 (FILE, NAME, DOMINANT) = ("SpiritedAway", "Spirited Away", 20)
 (IN_PATH, OUT_PATH, DPI) = ("./temp/", "./out/", 1000)
 FONT = aux.defineFont(
-    fontName='Uroob', size=20, alpha=.6, color='white'
+    fontName='Uroob', size=30, alpha=.6, color='white'
 )
 
 # Get frames paths
@@ -32,22 +32,38 @@ for (i, path) in enumerate(filepaths):
     rescale = [aux.rescaleColor(color) for color in palette]
     clusters.append(rescale)
 
+sortedClusters = [sorted(cls) for cls in clusters]
+
 # Export the resulting fingerprint
-fig, ax = plt.subplots(figsize=(10,2))
+fig, ax = plt.subplots(figsize=(10, 4))
 ax.axis('off')
 plt.imshow(list(map(list, zip(*clusters))))
 plt.savefig(
     OUT_PATH + FILE.split('.')[0] + '.png',
-    bbox_inches='tight', dpi=DPI,
-    pad_inches=0
+    bbox_inches='tight', dpi=DPI, pad_inches=0
 )
 plt.text(
-    .5, .5-.1, NAME, fontdict=FONT,
-    horizontalalignment='center', verticalalignment='center',
-    transform=ax.transAxes
+    .5, .5-.1, NAME, fontdict=FONT, horizontalalignment='center',
+    verticalalignment='center', transform=ax.transAxes
 )
 plt.savefig(
     OUT_PATH + FILE.split('.')[0] + 'N.png',
-    bbox_inches='tight', dpi=DPI,
-    pad_inches=0
+    bbox_inches='tight', dpi=DPI, pad_inches=0
+)
+
+# Export the resulting fingerprint
+fig, ax = plt.subplots(figsize=(10, 4))
+ax.axis('off')
+plt.imshow(list(map(list, zip(*sortedClusters))))
+plt.savefig(
+    OUT_PATH + FILE.split('.')[0] + 'S.png',
+    bbox_inches='tight', dpi=DPI, pad_inches=0
+)
+plt.text(
+    .5, .5-.1, NAME, fontdict=FONT, horizontalalignment='center',
+    verticalalignment='center', transform=ax.transAxes
+)
+plt.savefig(
+    OUT_PATH + FILE.split('.')[0] + 'SN.png',
+    bbox_inches='tight', dpi=DPI, pad_inches=0
 )
