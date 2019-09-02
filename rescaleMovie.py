@@ -5,7 +5,7 @@
 
 import os
 
-(FILE_NAME, IN_PATH, OUT_PATH) = ('CastleInTheSky.mp4', './original/', './in/')
+(FILE_NAME, IN_PATH, OUT_PATH) = ('KikisDeliveryService.mp4', './original/', './in/')
 (width, height) = (640, 320)
 
 os.system(

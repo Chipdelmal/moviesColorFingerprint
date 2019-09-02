@@ -7,15 +7,20 @@ from matplotlib import pyplot as plt
 
 
 # User Inputs
-(FILE, NAME, DOMINANT) = ("SpiritedAway", "Spirited Away", 20)
-(IN_PATH, OUT_PATH, DPI) = ("./temp/", "./out/", 1000)
+(FILE, NAME, DOMINANT) = ("TheWindRises", "The Wind Rises", 20)
+(IN_PATH, OUT_PATH, DPI) = (
+    "./temp/",
+    './out/',
+    1000
+)
 FONT = aux.defineFont(
-    fontName='Uroob', size=30, alpha=.6, color='white'
+    fontName='Uroob', size=10, alpha=.6, color='white'
 )
 
 # Get frames paths
 filepaths = sorted(glob.glob(IN_PATH + FILE + '*.jpg'))
 framesNumber = len(filepaths)
+framesNumber
 
 # Cluster images' colors
 clusters = []
@@ -39,7 +44,7 @@ fig, ax = plt.subplots(figsize=(10, 4))
 ax.axis('off')
 plt.imshow(list(map(list, zip(*clusters))))
 plt.savefig(
-    OUT_PATH + FILE.split('.')[0] + '.png',
+    OUT_PATH + FILE.split('.')[0] + '.pdf',
     bbox_inches='tight', dpi=DPI, pad_inches=0
 )
 plt.text(
@@ -47,16 +52,16 @@ plt.text(
     verticalalignment='center', transform=ax.transAxes
 )
 plt.savefig(
-    OUT_PATH + FILE.split('.')[0] + 'N.png',
+    OUT_PATH + FILE.split('.')[0] + 'N.pdf',
     bbox_inches='tight', dpi=DPI, pad_inches=0
 )
 
 # Export the resulting fingerprint
-fig, ax = plt.subplots(figsize=(10, 4))
+fig, ax = plt.subplots(figsize=(10, 5))
 ax.axis('off')
 plt.imshow(list(map(list, zip(*sortedClusters))))
 plt.savefig(
-    OUT_PATH + FILE.split('.')[0] + 'S.png',
+    OUT_PATH + FILE.split('.')[0] + 'S.pdf',
     bbox_inches='tight', dpi=DPI, pad_inches=0
 )
 plt.text(
@@ -64,6 +69,6 @@ plt.text(
     verticalalignment='center', transform=ax.transAxes
 )
 plt.savefig(
-    OUT_PATH + FILE.split('.')[0] + 'SN.png',
+    OUT_PATH + FILE.split('.')[0] + 'SN.pdf',
     bbox_inches='tight', dpi=DPI, pad_inches=0
 )
