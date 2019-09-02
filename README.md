@@ -15,13 +15,6 @@ These routines take a movie, and export it's color fingerpring by calculating th
 
 <img src="./media/Nausicaa.jpg">
 
-##  Requirements and Dependencies
-
-* [ffmpeg](https://ffmpeg.org/)
-* [ffmpeg-python](https://pypi.org/project/ffmpeg-python/)
-* [scikit-learn](https://scikit-learn.org/)
-* [matplotlib](https://matplotlib.org/)
-* [numpy](https://numpy.org/)
 
 ##  Instructions
 
@@ -33,6 +26,14 @@ These routines take a movie, and export it's color fingerpring by calculating th
 6. Open `mainFrames.py` and change the **frames root name**, the number of desired **dominant colors** (10 to 20 are recommended), and the **DPI** for the fingerprint file.
 7. Run `fingerprint.py`. The heatmaps will be in the `./fingerprint/` folder!
 
+
+##  Requirements and Dependencies
+
+* [ffmpeg](https://ffmpeg.org/)
+* [ffmpeg-python](https://pypi.org/project/ffmpeg-python/)
+* [scikit-learn](https://scikit-learn.org/)
+* [matplotlib](https://matplotlib.org/)
+* [numpy](https://numpy.org/)
 
 ## Author
 
