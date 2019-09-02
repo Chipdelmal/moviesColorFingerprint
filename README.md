@@ -1,12 +1,37 @@
-#   colorFingerprint
+#   Movies Color Fingerprint
 
-These routines take a movie, and export it's color fingerpring by calculating the dominant colors present in uniformly-spaced frames across the video.
+These routines take a movie, and export it's color fingerpring by calculating the dominant colors present in uniformly-spaced frames across the video. They do so by splitting a movie into frames, clustering the colors in each of the frames, and plotting the most prevalent ones in a heatmap (x-axis shows time, while the y-axis shows the different clusters of colors).
+
+
+**Princess Mononoke**
+
+<img src="./media/PrincessMononoke.jpg">
+
+**Spirited Away**
+
+<img src="./media/SpiritedAway.jpg">
+
+**Nausicaä of the Valley of the Wind**
+
+<img src="./media/Nausicaa.jpg">
+
+##  Requirements and Dependencies
+
+* [ffmpeg](https://ffmpeg.org/)
+* [ffmpeg-python](https://pypi.org/project/ffmpeg-python/)
+* [scikit-learn](https://scikit-learn.org/)
+* [matplotlib](https://matplotlib.org/)
+* [numpy](https://numpy.org/)
 
 ##  Instructions
 
-1. Place the movie in the `./original/` folder, and run the `rescaleMovie.py` script to downscale the size (640x320 is recommended).
-2. Export the frames by running the `exportFrames.py` script (500 is recommended). The frames will be exported to the `./temp/` folder.
-3. Run the `mainFrames.py` script to export the fingerprint. The resulting file will be exported to the `./out/` folder.
+1. Place the movie in the `./original/` folder.
+2. Open `rescaleMovie.py` to change **filename** of the movie to analyze, along with the target **resolution** for downscaling (640x320 is recommended).
+3. Run `rescaleMovie.py`. This will create a new video file in the `./rescaled/` folder with a downscaled version of the movie.
+4. Open `exportFrames.py` and change the **movie name**, along with the **number of frames** to split to (500 is recommended).
+5. Run `exportFrames.py`. This will export the still images into the  `./frames/` folder.
+6. Open `mainFrames.py` and change the **frames root name**, the number of desired **dominant colors** (10 to 20 are recommended), and the **DPI** for the fingerprint file.
+7. Run `fingerprint.py`. The heatmaps will be in the `./fingerprint/` folder!
 
 
 ## Author

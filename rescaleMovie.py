@@ -5,12 +5,12 @@
 
 import os
 
-(FILE_NAME, IN_PATH, OUT_PATH) = ('KikisDeliveryService.mp4', './original/', './in/')
-(width, height) = (640, 320)
+(FILE_NAME, DIMS) = ('goldenDays.mp4', (640, 320))
+(IN_PATH, OUT_PATH) = ('./original/', './rescaled/')
 
 os.system(
-    "ffmpeg -loglevel panic " +
-    "-i " + IN_PATH + FILE_NAME + " " +
-    "-vf scale=" + str(width) + ":" + str(height) + " " +
-    OUT_PATH + FILE_NAME
-)
+        "ffmpeg -loglevel panic "
+        + "-i " + IN_PATH + FILE_NAME + " "
+        + "-vf scale=" + str(DIMS[0]) + ":" + str(DIMS[1]) + " "
+        + OUT_PATH + FILE_NAME
+    )
