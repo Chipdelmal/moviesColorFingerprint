@@ -1,7 +1,14 @@
+# ############################################################################
+# Color Fingerprint: fingerprint.py
+#   Takes the frames from the previous step and clusters them using k-means,
+#   then it generates the heatmap fingerprint and exports it.
+# ############################################################################
+
 import aux
 import cv2
 import glob
-from sklearn.cluster import KMeans
+# from sklearn.cluster import KMeans
+from sklearn.cluster import MiniBatchKMeans
 from matplotlib import pyplot as plt
 
 # User Inputs
@@ -15,14 +22,14 @@ framesNumber = len(filepaths)
 # Cluster images' colors
 clusters = []
 for (i, path) in enumerate(filepaths):
-    if i % round(framesNumber / 10) == 0:
+    if (i % round(framesNumber / 10) == 0) or (i + 1 == framesNumber):
         print("Progress: (" + str(i/len(filepaths)) + " / 1.0)")
     frame = cv2.imread(path)
     flatFrame = []
     for row in frame:
         for col in row:
             flatFrame.append(list(col))
-    kmeans = KMeans(n_clusters=DOMINANT, n_jobs=4).fit(flatFrame)
+    kmeans = MiniBatchKMeans(n_clusters=DOMINANT, max_iter=100).fit(flatFrame)
     palette = kmeans.cluster_centers_
     rescale = [aux.rescaleColor(color) for color in palette]
     clusters.append(rescale)
