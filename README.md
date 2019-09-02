@@ -33,11 +33,8 @@ These routines take a movie, and export it's color fingerpring by calculating th
 
 ##  Requirements and Dependencies
 
-* [ffmpeg](https://ffmpeg.org/)
-* [ffmpeg-python](https://pypi.org/project/ffmpeg-python/)
-* [scikit-learn](https://scikit-learn.org/)
-* [matplotlib](https://matplotlib.org/)
-* [numpy](https://numpy.org/)
+[ffmpeg](https://ffmpeg.org/), [ffmpeg-python](https://pypi.org/project/ffmpeg-python/), [scikit-learn](https://scikit-learn.org/), [matplotlib](https://matplotlib.org/)
+
 
 ## Author
 
