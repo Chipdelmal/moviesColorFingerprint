@@ -22,7 +22,7 @@ framesNumber = len(filepaths)
 # Cluster images' colors
 clusters = []
 for (i, path) in enumerate(filepaths):
-    if (i % round(framesNumber / 10) == 0) or (i + 1 == framesNumber):
+    if (i % round(framesNumber / 10) == 0) or (i  == framesNumber):
         print("Progress: (" + str(i/len(filepaths)) + " / 1.0)")
     frame = cv2.imread(path)
     flatFrame = []
