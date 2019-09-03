@@ -3,8 +3,10 @@
 #   Auxiliary functions definitions
 # ############################################################################
 
+
 def rescaleColor(colorEightBit):
     return [i / 255 for i in colorEightBit]
+
 
 def fontFromOS(systemName):
     # Select font according to OS
@@ -16,10 +18,11 @@ def fontFromOS(systemName):
         FONT = 'Arial'
     return FONT
 
+
 def defineFont(fontName, color='black', size=100, alpha=.06):
     fontDict = {
         'fontname': fontName,
         'color': color, 'weight': 'light',
         'size': size, 'alpha': alpha
-    }
+        }
     return fontDict
