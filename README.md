@@ -1,4 +1,4 @@
-#   Movies Color Fingerprint
+#   Movies' Color Fingerprint
 
 These routines take a movie, and export it's color fingerpring by calculating the dominant colors present in uniformly-spaced frames across the video. They do so by splitting a movie into frames, clustering the colors in each of the frames, and plotting the most prevalent ones in a heatmap (x-axis shows time, while the y-axis shows the different clusters of colors).
 
@@ -38,11 +38,8 @@ For now, generating the fingerprint is a somewhat convoluded process. I hope I h
 
 ##  Requirements and Dependencies
 
-* [ffmpeg](https://ffmpeg.org/)
-* [ffmpeg-python](https://pypi.org/project/ffmpeg-python/)
-* [scikit-learn](https://scikit-learn.org/)
-* [matplotlib](https://matplotlib.org/)
-* [numpy](https://numpy.org/)
+[ffmpeg](https://ffmpeg.org/), [ffmpeg-python](https://pypi.org/project/ffmpeg-python/), [scikit-learn](https://scikit-learn.org/), [matplotlib](https://matplotlib.org/)
+
 
 ## Author
 
