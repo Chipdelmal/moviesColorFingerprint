@@ -4,23 +4,14 @@ These routines take a movie, and export it's color fingerpring by calculating th
 
 
 **Princess Mononoke**
-
 <img src="./media/PrincessMononoke.jpg">
-
 **Spirited Away**
-
 <img src="./media/SpiritedAway.jpg">
-
 **Nausicaä of the Valley of the Wind**
-
 <img src="./media/Nausicaa.jpg">
-
 **The Wind Rises**
-
 <img src="./media/TheWindRises.jpg">
-
 **Castle in the Sky**
-
 <img src="./media/CastleInTheSky.jpg">
 
 ##  Instructions
