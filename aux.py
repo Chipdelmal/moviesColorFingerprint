@@ -5,7 +5,9 @@
 
 
 def rescaleColor(colorEightBit):
-    return [i / 255 for i in colorEightBit]
+    colors = list(colorEightBit)
+    colors.reverse()
+    return [i / 255 for i in colors]
 
 
 def fontFromOS(systemName):
