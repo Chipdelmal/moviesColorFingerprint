@@ -3,11 +3,11 @@
 #   This auxiliary script exports a homogeneously spaced set of frames
 #   from the provided input video.
 # ############################################################################
-
 import os
 import ffmpeg
 
-(FILE, FRAMES_NUM) = ("GoldenDays.mp4", 50)
+# User inputs
+(FILE, FRAMES_NUM) = ("Nausicaa.mp4", 100)
 (IN_PATH, OUT_PATH) = ("./rescaled/", "./frames/")
 
 # Calculating fps to match required number of frames
