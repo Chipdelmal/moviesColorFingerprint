@@ -9,16 +9,24 @@ from matplotlib import pyplot as plt
 from sklearn.cluster import MiniBatchKMeans
 
 
+def readAndProcessImg(path):
+    # Read image and convert from BGR to RGB
+    bgr = cv2.imread(path)
+    frame = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+    # Flatten the image into an RGB vector
+    shp = frame.shape
+    return (frame, shp)
+
+
 def calculateDominantColors(filepaths, domColNum, maxIter=100):
-    framesNumber = len(filepaths)
-    clusters = np.empty((framesNumber, domColNum, 3))
+    # Create an empty array with dimensions: (framesNumber, dominantColors, 3)
+    clusters = np.empty((len(filepaths), domColNum, 3))
+    # Initialize a KMean instance for clustering
     kMeansCall = MiniBatchKMeans(n_clusters=domColNum, max_iter=maxIter)
+    # Iterate through the files
     for (i, path) in enumerate(filepaths):
-        # Read image and convert from BGR to RGB
-        bgr = cv2.imread(path)
-        frame = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-        # Flatten the image into an RGB vector
-        shp = frame.shape
+        # Read image and reshape to an RGB vector of vectors
+        (frame, shp) = readAndProcessImg(path)
         flatFrame = frame.reshape([1, shp[0] * shp[1], 3])[0]
         # Cluster the RGB entries for color dominance detection
         kmeans = kMeansCall.fit(flatFrame)
