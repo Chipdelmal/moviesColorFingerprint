@@ -12,10 +12,21 @@ from sklearn.cluster import MiniBatchKMeans
 def readAndProcessImg(path):
     # Read image and convert from BGR to RGB
     bgr = cv2.imread(path)
-    frame = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+    frameBGR = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+    # Remove borders
+    # gray = cv2.cvtColor(frameBGR, cv2.COLOR_BGR2GRAY)
+    # (_, thresh) = cv2.threshold(gray,1,255,cv2.THRESH_BINARY)
+    # frame = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+    # (contours, hierarchy) = cv2.findContours(
+    #     thresh,cv2.RETR_EXTERNAL,
+    #     cv2.CHAIN_APPROX_SIMPLE
+    # )
+    # cnt = contours[0]
+    # (x, y, w, h) = cv2.boundingRect(cnt)
+    # crop = frameBGR[y:y+h,x:x+w]
     # Flatten the image into an RGB vector
-    shp = frame.shape
-    return (frame, shp)
+    shp = frameBGR.shape
+    return (frameBGR, shp)
 
 
 def calculateDominantColors(filepaths, domColNum, maxIter=100):
@@ -37,7 +48,7 @@ def calculateDominantColors(filepaths, domColNum, maxIter=100):
 
 
 def getFilepaths(path, namesHead, ext='.png'):
-    filepaths = sorted(glob.glob(path + namesHead + '*' + ext))
+    filepaths = sorted(glob.glob(path + '/' + namesHead + '*' + ext))
     return filepaths
 
 
@@ -46,12 +57,23 @@ def rescaleColor(colorEightBit):
     return [i / 255 for i in colors]
 
 
-def exportFingerprintPlot(path, filename, clusters, dims=(10, 5), dpi=500):
+def exportFingerprintPlot(
+        path, filename, clusters, dims=(10, 10), 
+        dpi=500, aspect=1, movieTitle='', **kwargs
+    ):
     fig, ax = plt.subplots(figsize=dims)
     ax.axis('off')
-    plt.imshow(list(map(list, zip(*clusters))))
+    plt.imshow(list(map(list, zip(*clusters))), aspect=aspect)
+    plt.text(
+        0.5, 0.5, movieTitle, 
+        horizontalalignment='center', verticalalignment='center', 
+        transform=ax.transAxes, 
+        fontfamily=kwargs['fontfamily'],
+        fontsize=kwargs['fontsize'],
+        color=kwargs['color']
+    )
     plt.savefig(
-            path + filename, dpi=dpi,
+            path + '/' + filename, dpi=dpi,
             bbox_inches='tight', pad_inches=0
         )
     plt.close()
@@ -73,5 +95,18 @@ def defineFont(fontName, color='black', size=100, alpha=.06):
         'fontname': fontName,
         'color': color, 'weight': 'light',
         'size': size, 'alpha': alpha
-        }
+    }
     return fontDict
+
+
+def isNotebook():
+    try:
+        shell = get_ipython().__class__.__name__
+        if shell == 'ZMQInteractiveShell':
+            return True   # Jupyter notebook or qtconsole
+        elif shell == 'TerminalInteractiveShell':
+            return False  # Terminal running IPython
+        else:
+            return False  # Other type (?)
+    except NameError:
+        return False      # Probably standard Python interpreter
