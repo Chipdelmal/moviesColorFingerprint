@@ -22,7 +22,6 @@ vInfo = next(s for s in probe['streams'] if s['codec_type'] == 'video')
 framesNumMovie = int(vInfo['nb_frames'])
 framerate = eval(vInfo['avg_frame_rate'])
 fps = FRAMES_NUM / framesNumMovie * framerate
-
 # Export frames
 os.system(
         "ffmpeg -loglevel panic "

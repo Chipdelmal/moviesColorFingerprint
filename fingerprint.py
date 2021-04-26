@@ -9,26 +9,29 @@ import numpy as np
 import auxiliary as aux
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
-    (FILE, DOMINANT, FRAMES, DPI) = ("PrincessMononoke", 1, 3600, 1000)
+    (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
+        "TwelveMonkeys", 3, 10, 3600, 1000
+    )
     (IN_PATH, OUT_PATH, TITLE) = (
         "/mnt/Luma/Videos/Movies/Frames", 
-        '/mnt/Luma/Videos/Movies/',
-        'Princess\nMononoke'
+        "/mnt/Luma/Pictures/Art/Movies/",
+        "Twelve\nMonkeys"
     )
 else:
-    (FILE, DOMINANT, FRAMES, DPI) = (
-        sys.argv[1], int(sys.argv[2]), 
-        int(sys.argv[3]), int(sys.argv[4])
+    (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
+        sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), 
+        int(sys.argv[4]), int(sys.argv[5])
     )
     (IN_PATH, OUT_PATH, TITLE) = (
-        sys.argv[5], sys.argv[6], sys.argv[7]
+        sys.argv[6], sys.argv[7], sys.argv[8]
     )
+    TITLE = bytes(TITLE, "utf-8").decode("unicode_escape")
 # Get frames paths and calculate the dominant clusters of the images ----------
 filepaths = aux.getFilepaths(IN_PATH, FILE)
-clusters = aux.calculateDominantColors(filepaths, DOMINANT)
+clusters = aux.calculateDominantColors(filepaths, DOMINANT, CLUSTERS)
 # Export the resulting fingerprints -------------------------------------------
 aux.exportFingerprintPlot(
     OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
-    aspect=FRAMES/DOMINANT, movieTitle=str(TITLE), fontsize=100, 
-    fontfamily='Gotham Light', color='#FFFFFF88'
+    aspect=FRAMES/DOMINANT, movieTitle=str(TITLE).format(), 
+    fontsize=100, fontfamily='Gotham Light', color='#FFFFFF88'
 )

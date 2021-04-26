@@ -5,6 +5,9 @@
 import cv2
 import glob
 import numpy as np
+from itertools import cycle
+from itertools import groupby
+from operator import itemgetter
 from matplotlib import pyplot as plt
 from sklearn.cluster import MiniBatchKMeans
 
@@ -29,21 +32,43 @@ def readAndProcessImg(path):
     return (frameBGR, shp)
 
 
-def calculateDominantColors(filepaths, domColNum, maxIter=100):
+def calculateDominantColors(
+        filepaths, domColNum, clustersNum, maxIter=100, VERBOSE=True
+    ):
     # Create an empty array with dimensions: (framesNumber, dominantColors, 3)
     clusters = np.empty((len(filepaths), domColNum, 3))
     # Initialize a KMean instance for clustering
-    kMeansCall = MiniBatchKMeans(n_clusters=domColNum, max_iter=maxIter)
+    kMeansCall = MiniBatchKMeans(n_clusters=clustersNum, max_iter=maxIter)
     # Iterate through the files
     for (i, path) in enumerate(filepaths):
+        if VERBOSE:
+            print(
+                '\t* Processing {}/{}'.format(i+1, len(filepaths)), 
+                end="\r"
+            )
         # Read image and reshape to an RGB vector of vectors
         (frame, shp) = readAndProcessImg(path)
         flatFrame = frame.reshape([1, shp[0] * shp[1], 3])[0]
         # Cluster the RGB entries for color dominance detection
         kmeans = kMeansCall.fit(flatFrame)
         # Take the color palette and add it to the clusters container
-        palette = kmeans.cluster_centers_
-        clusters[i] = [rescaleColor(color) for color in palette]
+        if (domColNum==1 and clustersNum==1):
+            palette = kmeans.cluster_centers_
+            clusters[i] = [rescaleColor(color) for color in palette]
+        else:
+            frequencies = {
+                key: len(list(group)) for key, group in groupby(sorted(kmeans.labels_))
+            }
+            dominant = dict(
+                sorted(frequencies.items(), key = itemgetter(1), reverse = True
+            )[:domColNum])
+            dominantKeys = list(dominant.keys())
+            palette = [kmeans.cluster_centers_[j] for j in dominantKeys]
+            myiter = cycle(palette)
+            pallettePad = [next(myiter) for _ in range(domColNum)]
+            clusters[i] = [rescaleColor(color) for color in pallettePad]
+
+
     return clusters
 
 
