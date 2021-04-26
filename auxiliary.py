@@ -42,10 +42,8 @@ def calculateDominantColors(
     # Iterate through the files
     for (i, path) in enumerate(filepaths):
         if VERBOSE:
-            print(
-                '\t* Processing {}/{}'.format(i+1, len(filepaths)), 
-                end="\r"
-            )
+            filesNum = len(filepaths)
+            print('\t* Frame {}/{}'.format(i+1, filesNum), end='\r')
         # Read image and reshape to an RGB vector of vectors
         (frame, shp) = readAndProcessImg(path)
         flatFrame = frame.reshape([1, shp[0] * shp[1], 3])[0]
@@ -67,8 +65,8 @@ def calculateDominantColors(
             myiter = cycle(palette)
             pallettePad = [next(myiter) for _ in range(domColNum)]
             clusters[i] = [rescaleColor(color) for color in pallettePad]
-
-
+    if VERBOSE:
+        print("\33[2K", end='\r')
     return clusters
 
 

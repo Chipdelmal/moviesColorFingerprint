@@ -2,6 +2,7 @@
 # Color Fingerprint: fingerprint.py
 #   Takes the frames from the previous step and clusters them using k-means,
 #   then it generates the heatmap fingerprint and exports it.
+# https://superuser.com/questions/1552112/ffmpeg-extract-every-frame-from-a-video-no-quality-loss-and-resize-shorter-s
 # #############################################################################
 import sys
 from os import path
@@ -10,12 +11,12 @@ import auxiliary as aux
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
-        "TwelveMonkeys", 3, 10, 3600, 1000
+        "Nausicaa", 3, 10, 3600, 1000
     )
     (IN_PATH, OUT_PATH, TITLE) = (
         "/mnt/Luma/Videos/Movies/Frames", 
         "/mnt/Luma/Pictures/Art/Movies/",
-        "Twelve\nMonkeys"
+        "Nausica0xC3\nof the\nValley\nof the\nWind"
     )
 else:
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
@@ -33,5 +34,5 @@ clusters = aux.calculateDominantColors(filepaths, DOMINANT, CLUSTERS)
 aux.exportFingerprintPlot(
     OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
     aspect=FRAMES/DOMINANT, movieTitle=str(TITLE).format(), 
-    fontsize=100, fontfamily='Gotham Light', color='#FFFFFF88'
+    fontsize=100, fontfamily='Gotham Light', color='#FFFFFFAA'
 )
