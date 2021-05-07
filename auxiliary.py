@@ -2,13 +2,17 @@
 # Color Fingerprint: aux.py
 #   Auxiliary functions definitions
 # ############################################################################
+import os
 import cv2
 import glob
+import shutil
 import numpy as np
 from itertools import cycle
 from itertools import groupby
 from operator import itemgetter
 from matplotlib import pyplot as plt
+from joblib import Parallel, delayed
+from joblib import dump, load
 from sklearn.cluster import MiniBatchKMeans
 
 
@@ -16,21 +20,70 @@ def readAndProcessImg(path):
     # Read image and convert from BGR to RGB
     bgr = cv2.imread(path)
     frameBGR = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-    # Remove borders
-    # gray = cv2.cvtColor(frameBGR, cv2.COLOR_BGR2GRAY)
-    # (_, thresh) = cv2.threshold(gray,1,255,cv2.THRESH_BINARY)
-    # frame = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-    # (contours, hierarchy) = cv2.findContours(
-    #     thresh,cv2.RETR_EXTERNAL,
-    #     cv2.CHAIN_APPROX_SIMPLE
-    # )
-    # cnt = contours[0]
-    # (x, y, w, h) = cv2.boundingRect(cnt)
-    # crop = frameBGR[y:y+h,x:x+w]
-    # Flatten the image into an RGB vector
     shp = frameBGR.shape
     return (frameBGR, shp)
 
+
+def dominantImage(
+        img, domColNum, clustersNum, maxIter=100
+    ):
+    (frame, shp) = img
+    flatFrame = frame.reshape([1, shp[0] * shp[1], 3])[0]
+    kMeansCall = MiniBatchKMeans(n_clusters=clustersNum, max_iter=maxIter)
+    kmeans = kMeansCall.fit(flatFrame)
+    # Take the color palette and add it to the clusters container
+    if (domColNum==1 and clustersNum==1):
+        palette = kmeans.cluster_centers_
+        clusters[i] = [rescaleColor(color) for color in palette]
+    else:
+        frequencies = {
+            key: len(list(group)) for key, group in groupby(sorted(kmeans.labels_))
+        }
+        dominant = dict(
+            sorted(frequencies.items(), key = itemgetter(1), reverse = True
+        )[:domColNum])
+        dominantKeys = list(dominant.keys())
+        palette = [kmeans.cluster_centers_[j] for j in dominantKeys]
+        myiter = cycle(palette)
+        pallettePad = [next(myiter) for _ in range(domColNum)]
+    colors = [rescaleColor(color) for color in pallettePad]
+    return colors
+
+
+def dominatImageWrapper(
+        ix, filepaths, clustersArray, 
+        domColNum, clustersNum, 
+        maxIter=100, VERBOSE=True
+    ):
+    if VERBOSE:
+        filesNum = len(filepaths)
+        print('\t* Frame {}/{}'.format(ix+1, filesNum), end='\r')
+    img = readAndProcessImg(filepaths[ix])
+    cols = dominantImage(img, domColNum, clustersNum, maxIter=maxIter)
+    clustersArray[ix] = cols
+    # print(clustersArray[ix-1:ix+1])
+    return clustersArray
+
+
+def parallelDominantImage(
+        filepaths, domColNum, clustersNum, 
+        maxIter=100, VERBOSE=True, jobs=4
+    ):
+    mmap = 'memmap.job'
+    clustersArray = np.memmap(
+        mmap, dtype=np.double,
+        shape=(len(filepaths), domColNum, 3), mode='w+'
+    )
+    # clustersArray = np.empty((len(filepaths), domColNum, 3))
+    Parallel(n_jobs=jobs)(
+        delayed(dominatImageWrapper)(
+            ix, filepaths, clustersArray, 
+            domColNum, clustersNum, 
+            maxIter=maxIter, VERBOSE=VERBOSE
+        ) for ix in range(0, len(filepaths))
+    )
+    os.remove(mmap) 
+    return clustersArray
 
 def calculateDominantColors(
         filepaths, domColNum, clustersNum, maxIter=100, VERBOSE=True

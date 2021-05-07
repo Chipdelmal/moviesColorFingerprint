@@ -4,19 +4,23 @@
 #   then it generates the heatmap fingerprint and exports it.
 # https://superuser.com/questions/1552112/ffmpeg-extract-every-frame-from-a-video-no-quality-loss-and-resize-shorter-s
 # #############################################################################
+
 import sys
-from os import path
 import numpy as np
+from os import path
+import multiprocessing
 import auxiliary as aux
+
+JOBS = multiprocessing.cpu_count()
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
-        "Nausicaa", 3, 10, 3600, 1000
+        "Moon", 1, 3, 3600, 1000
     )
     (IN_PATH, OUT_PATH, TITLE) = (
         "/mnt/Luma/Videos/Movies/Frames", 
         "/mnt/Luma/Pictures/Art/Movies/",
-        "Nausica0xC3\nof the\nValley\nof the\nWind"
+        "Moon"
     )
 else:
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
@@ -29,7 +33,11 @@ else:
     TITLE = bytes(TITLE, "utf-8").decode("unicode_escape")
 # Get frames paths and calculate the dominant clusters of the images ----------
 filepaths = aux.getFilepaths(IN_PATH, FILE)
-clusters = aux.calculateDominantColors(filepaths, DOMINANT, CLUSTERS)
+clusters = aux.parallelDominantImage(
+    filepaths, DOMINANT, CLUSTERS, 
+    maxIter=100, VERBOSE=True, jobs=4
+)
+# clusters = aux.calculateDominantColors(filepaths, DOMINANT, CLUSTERS)
 # Export the resulting fingerprints -------------------------------------------
 aux.exportFingerprintPlot(
     OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
