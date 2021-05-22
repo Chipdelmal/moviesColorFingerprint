@@ -15,7 +15,7 @@ JOBS = multiprocessing.cpu_count()
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
-        "Moon", 1, 3, 3600, 1000
+        "Moon", 5, 10, 3600, 1000
     )
     (IN_PATH, OUT_PATH, TITLE) = (
         "/mnt/Luma/Videos/Movies/Frames", 
@@ -35,7 +35,7 @@ else:
 filepaths = aux.getFilepaths(IN_PATH, FILE)
 clusters = aux.parallelDominantImage(
     filepaths, DOMINANT, CLUSTERS, 
-    maxIter=100, VERBOSE=True, jobs=4
+    maxIter=100, VERBOSE=True, jobs=8
 )
 # clusters = aux.calculateDominantColors(filepaths, DOMINANT, CLUSTERS)
 # Export the resulting fingerprints -------------------------------------------
