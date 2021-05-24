@@ -6,7 +6,6 @@
 # #############################################################################
 
 import sys
-import numpy as np
 from os import path
 import multiprocessing
 import auxiliary as aux
@@ -14,6 +13,7 @@ import auxiliary as aux
 JOBS = multiprocessing.cpu_count()
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
+    # For testing and debugging in jupyter ------------------------------------
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
         "Moon", 5, 10, 3600, 1000
     )
@@ -23,6 +23,7 @@ if aux.isNotebook():
         "Moon"
     )
 else:
+    # For calls from the terminal ---------------------------------------------
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
         sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), 
         int(sys.argv[4]), int(sys.argv[5])
