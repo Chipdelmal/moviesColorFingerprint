@@ -1,5 +1,9 @@
 #!/bin/bash
 
+PT_I='/mnt/Luma/Videos/Movies'
+PT_O='/mnt/Luma/Pictures/Art/Movies/'
+
+./fingerprint.sh $PT_I $PT_O "Sonic.mp4" "Sonic\nthe\nHedgehog"
 
 # ./fingerprint.sh "PorcoRosso.mp4" "Porco\nRosso"
 # ./fingerprint.sh "Ponyo.mp4" "Ponyo"
@@ -19,7 +23,7 @@
 # ./fingerprint.sh "Gattaca.mp4" "Gattaca"
 # ./fingerprint.sh "Gravity.mp4" "Gravity"
 
-# ./fingerprint.sh "STIntoDarkness.mp4" "Star Trek\nInto\nDarkness"
+# ./fingerprint.sh "STIntoDarkness.mp4" "Star Trek:\nInto\nDarkness"
 # ./fingerprint.sh "LovingVincent.mp4" "Loving\nVincent"
 # ./fingerprint.sh "TheMartian.mp4" "The\nMartian"
 # ./fingerprint.sh "TwelveMonkeys.mp4" "Twelve\nMonkeys"
@@ -44,4 +48,5 @@
 # ./fingerprint.sh "Peanuts.mp4" "The\nPeanuts\nMovie"
 # ./fingerprint.sh "RaceCharlie.mp4" "Race\nfor your\nLife,\nCharlie\nBrown"
 # ./fingerprint.sh "BoyCharlie.mp4" "A Boy\nNamed\nCharlie\nBrown"
-./fingerprint.sh "Joker.mp4" "Joker"
+# ./fingerprint.sh "Joker.mp4" "Joker"
+# ./fingerprint.sh "Sonic.mp4" "Sonic\nthe\nHedgehog"
