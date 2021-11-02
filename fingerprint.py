@@ -15,7 +15,7 @@ JOBS = multiprocessing.cpu_count()
 if aux.isNotebook():
     # For testing and debugging in jupyter ------------------------------------
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
-        "Moon", 5, 10, 3600, 1000
+        "1937_SnowWhite", 5, 10, 3600, 1000
     )
     (IN_PATH, OUT_PATH, TITLE) = (
         "/mnt/Luma/Videos/Movies/Frames", 
@@ -43,5 +43,7 @@ clusters = aux.parallelDominantImage(
 aux.exportFingerprintPlot(
     OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
     aspect=FRAMES/DOMINANT, movieTitle=str(TITLE).format(), 
-    fontsize=100, fontfamily='Gotham Light', color='#FFFFFFAA'
+    fontsize=30, fontfamily='Gotham Light', 
+    color='#FFFFFFFF', textpos=(0.5, (.5-.3)/2),
+    facecolor='#000000FF', hspan=(.3, .5)
 )

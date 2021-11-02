@@ -139,9 +139,17 @@ def exportFingerprintPlot(
     ):
     fig, ax = plt.subplots(figsize=dims)
     ax.axis('off')
+    ax.axhspan(
+        kwargs['hspan'][0], kwargs['hspan'][1], 
+        facecolor=kwargs['facecolor'], transform=ax.transAxes
+    )
+    ax.axhspan(
+        kwargs['hspan'][0]-.005, kwargs['hspan'][0], 
+        facecolor='#ffffff', transform=ax.transAxes
+    )
     plt.imshow(list(map(list, zip(*clusters))), aspect=aspect)
     plt.text(
-        0.5, 0.5, movieTitle, 
+        kwargs['textpos'][0], kwargs['textpos'][1], movieTitle, 
         horizontalalignment='center', verticalalignment='center', 
         transform=ax.transAxes, 
         fontfamily=kwargs['fontfamily'],
