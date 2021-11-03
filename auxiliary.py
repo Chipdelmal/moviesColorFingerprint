@@ -14,6 +14,8 @@ from matplotlib import pyplot as plt
 from joblib import Parallel, delayed
 from joblib import dump, load
 from sklearn.cluster import MiniBatchKMeans
+import matplotlib.font_manager
+from IPython.core.display import HTML
 
 
 def readAndProcessImg(path):
@@ -144,7 +146,7 @@ def exportFingerprintPlot(
         facecolor=kwargs['facecolor'], transform=ax.transAxes
     )
     ax.axhspan(
-        kwargs['hspan'][0]-.005, kwargs['hspan'][0], 
+        kwargs['hspan'][0]-.0020, kwargs['hspan'][0], 
         facecolor='#ffffff', transform=ax.transAxes
     )
     plt.imshow(list(map(list, zip(*clusters))), aspect=aspect)
@@ -194,3 +196,12 @@ def isNotebook():
             return False  # Other type (?)
     except NameError:
         return False      # Probably standard Python interpreter
+
+
+
+
+# def make_html(fontname):
+#     return "<p>{font}: <span style='font-family:{font}; font-size: 24px;'>{font}</p>".format(font=fontname)
+
+# code = "\n".join([make_html(font) for font in sorted(set([f.name for f in matplotlib.font_manager.fontManager.ttflist]))])
+# HTML("<div style='column-count: 2;'>{}</div>".format(code))

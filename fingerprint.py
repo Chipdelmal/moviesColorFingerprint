@@ -43,7 +43,7 @@ clusters = aux.parallelDominantImage(
 aux.exportFingerprintPlot(
     OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
     aspect=FRAMES/DOMINANT, movieTitle=str(TITLE).format(), 
-    fontsize=30, fontfamily='Gotham Light', 
-    color='#FFFFFFFF', textpos=(0.5, (.5-.3)/2),
-    facecolor='#000000FF', hspan=(.3, .5)
+    fontsize=30, fontfamily='Gotham XLight', 
+    color='#FFFFFFFF', textpos=(0.5, (.5-.35)/2),
+    facecolor='#000000FF', hspan=(.35, .5)
 )
