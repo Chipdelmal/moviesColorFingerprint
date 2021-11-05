@@ -20,9 +20,9 @@ mkdir -p $PT_O
 # Rescale movie ---------------------------------------------------------------
 echo "* Processing: $FNAME"
 echo "[1/3] Re-scaling $FNAME..."
-ffmpeg -n -loglevel panic -i "$PT_I/$FNAME" -vf "scale=$SCALE" "$PT_R/$FNAME"
+# ffmpeg -n -loglevel panic -i "$PT_I/$FNAME" -vf "scale=$SCALE" "$PT_R/$FNAME"
 echo "[2/3] Exporting frames..."
-python exportFrames.py $FNAME $FRNUM $PT_R $PT_F
+# python exportFrames.py $FNAME $FRNUM $PT_R $PT_F
 echo "[3/3] Generating fingerprint..."
 python fingerprint.py "${FNAME%.*}" $DOM $CLS $FRNUM $DPI $PT_F $PT_O "$TITLE"
 # Delete scratch folders  -----------------------------------------------------
