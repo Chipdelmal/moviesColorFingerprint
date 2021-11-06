@@ -5,7 +5,7 @@ PT_O=$2
 FNAME=$3 # "Nausicaa.mp4"
 TITLE=$4 # "Nausicaä\nof the\nValley\nof the\nWind"
 # Constants that shouldn't be constants ---------------------------------------
-DOM='1'
+DOM='5'
 CLS='7'
 SCALE='640:370' # '480:270'
 FRNUM='3600'

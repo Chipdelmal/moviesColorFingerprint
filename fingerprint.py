@@ -56,4 +56,3 @@ hexList = [[aux.rgb_to_hex(i) for i in frame] for frame in clusters]
 with open(path.join(OUT_PATH, FILE+'.csv'), "w") as f:
     wr = csv.writer(f)
     wr.writerows(hexList)
-

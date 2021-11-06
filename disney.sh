@@ -52,5 +52,3 @@ PT_O='/mnt/Luma/Pictures/Art/Movies/Disney/'
 ./fingerprint.sh $PT_I $PT_O "2016_Zootopia.mp4" "Zootopia\n(2016)"
 ./fingerprint.sh $PT_I $PT_O "2016_Moana.mp4" "Moana\n(2016)"
 ./fingerprint.sh $PT_I $PT_O "2021_RayaAndTheLastDragon.mp4" "Raya and the Last Dragon\n(2021)"
-
-
