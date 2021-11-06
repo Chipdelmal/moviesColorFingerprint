@@ -10,6 +10,7 @@ from os import path
 import multiprocessing
 import auxiliary as aux
 import pickle as pkl
+import csv
 
 JOBS = multiprocessing.cpu_count()
 # User inputs -----------------------------------------------------------------
@@ -51,3 +52,8 @@ clusters = aux.parallelDominantImage(
 # Export colorfiles -----------------------------------------------------------
 with open(path.join(OUT_PATH, FILE+'.pkl'),'wb') as file:
     pkl.dump(clusters, file)
+hexList = [[aux.rgb_to_hex(i) for i in frame] for frame in clusters]
+with open(path.join(OUT_PATH, FILE+'.csv'), "w") as f:
+    wr = csv.writer(f)
+    wr.writerows(hexList)
+

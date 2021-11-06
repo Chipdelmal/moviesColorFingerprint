@@ -26,6 +26,10 @@ def readAndProcessImg(path):
     return (frameBGR, shp)
 
 
+def rgb_to_hex(rgb):
+    return '%02x%02x%02x' % tuple([int(i*255) for i in rgb])
+
+
 def dominantImage(
         img, domColNum, clustersNum, maxIter=100
     ):
