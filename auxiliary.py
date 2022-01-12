@@ -155,23 +155,25 @@ def exportFingerprintPlot(
         kwargs['hspan'][0], kwargs['hspan'][1], 
         facecolor=kwargs['facecolor'], transform=ax.transAxes
     )
-    ax.axhspan(
-        kwargs['hspan'][0]-.0020, kwargs['hspan'][0], 
-        facecolor='#ffffff', transform=ax.transAxes
-    )
+    # ax.axvspan(
+    #     kwargs['vspan'][0], kwargs['vspan'][1],
+    #     facecolor=kwargs['facecolor'], transform=ax.transAxes
+    # )
     plt.imshow(list(map(list, zip(*clusters))), aspect=aspect)
     plt.text(
         kwargs['textpos'][0], kwargs['textpos'][1], movieTitle, 
-        horizontalalignment='center', verticalalignment='center', 
-        transform=ax.transAxes, 
+        horizontalalignment=kwargs['halign'], 
+        verticalalignment=kwargs['valign'], 
         fontfamily=kwargs['fontfamily'],
         fontsize=kwargs['fontsize'],
-        color=kwargs['color']
+        color=kwargs['color'],
+        transform=ax.transAxes
     )
     plt.savefig(
-            path + '/' + filename, dpi=dpi,
-            bbox_inches='tight', pad_inches=0
-        )
+        path + '/' + filename, dpi=dpi,
+        bbox_inches='tight', pad_inches=0,
+        facecolor=kwargs['facecolor']
+    )
     plt.close()
 
 

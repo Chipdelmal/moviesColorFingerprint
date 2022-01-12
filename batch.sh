@@ -98,3 +98,8 @@ PT_O='/mnt/Luma/Pictures/Art/Movies/'
 # ./fingerprint.sh "Sonic.mp4" "Sonic\nthe\nHedgehog"
 # ./fingerprint.sh $PT_I $PT_O "Sonic.mp4" "Sonic\nthe\nHedgehog"
 # ./fingerprint.sh $PT_I $PT_O "SingStreet.mp4" "Sing\nStreet"
+
+# ./fingerprint.sh $PT_I $PT_O "Dune.mp4" "Dune"
+
+# ./fingerprint.sh $PT_I $PT_O "2017_Coco.mp4" "Coco"
+./fingerprint.sh $PT_I $PT_O "2021_Encanto.mp4" "Encanto"
