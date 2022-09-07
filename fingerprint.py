@@ -17,12 +17,12 @@ JOBS = multiprocessing.cpu_count()
 if aux.isNotebook():
     # For testing and debugging in jupyter ------------------------------------
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
-        "2021_Encanto", 1, 3, 3600, 1000
+        "1953_PeterPan", 1, 3, 3600, 1000
     )
     (IN_PATH, OUT_PATH, TITLE) = (
-        "/mnt/Luma/Videos/Movies/Frames", 
-        "/mnt/Luma/Pictures/Art/Movies/",
-        "Encanto"
+        "/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Frames", 
+        "/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Art",
+        "Peter Pan"
     )
 else:
     # For calls from the terminal ---------------------------------------------
@@ -35,6 +35,7 @@ else:
     )
     TITLE = bytes(TITLE, "utf-8").decode("unicode_escape")
 # Get frames paths and calculate the dominant clusters of the images ----------
+IN_PATH = path.join(IN_PATH, FILE)
 filepaths = aux.getFilepaths(IN_PATH, FILE)
 pklFile = path.join(OUT_PATH, FILE+'.pkl')
 if path.isfile(pklFile):

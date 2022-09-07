@@ -17,16 +17,17 @@ PT_F="$PT_I/Frames"
 mkdir -p $PT_R
 mkdir -p $PT_F
 mkdir -p $PT_O
+
 # Rescale movie ---------------------------------------------------------------
 echo "* Processing: $FNAME"
-# echo "[1/4] Re-scaling $FNAME..."
-# ffmpeg -n -loglevel panic -i "$PT_I/$FNAME" -vf "scale=$SCALE" "$PT_R/$FNAME"
-# echo "[2/4] Exporting frames..."
-# python exportFrames.py $FNAME $FRNUM $PT_R $PT_F
-# echo "[3/4] Generating fingerprint..."
+echo "[1/4] Re-scaling $FNAME..."
+ffmpeg -n -loglevel panic -i "$PT_I/$FNAME" -vf "scale=$SCALE" "$PT_R/$FNAME"
+echo "[2/4] Exporting frames..."
+python exportFrames.py $FNAME $FRNUM $PT_R $PT_F
+echo "[3/4] Generating fingerprint..."
 python fingerprint.py "${FNAME%.*}" $DOM $CLS $FRNUM $DPI $PT_F $PT_O "$TITLE"
-# echo "[4/4] Generating colorspace plots..."
-# python plotColor.py "${FNAME%.*}" $DOM $CLS $FRNUM $DPI $PT_F $PT_O "$TITLE"
+echo "[4/4] Generating colorspace plots..."
+python plotColor.py "${FNAME%.*}" $DOM $CLS $FRNUM $DPI $PT_F $PT_O "$TITLE"
 # Delete scratch folders  -----------------------------------------------------
 # rm -r $PT_R
 # rm -r $PT_F
