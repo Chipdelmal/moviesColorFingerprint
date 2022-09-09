@@ -32,7 +32,7 @@ NC='\033[0m'
 # Rescale movie
 ###############################################################################
 printf "${LGREEN}* Processing: $FNAME ${NC}\n"
-printf "\t [1/3] Re-scaling $FNAME...\n"
+printf "\t [1/3] Re-scaling... \n"
 ffmpeg -n -loglevel panic -i "$PT_I/$FNAME" -vf "scale=$SCALE" "$PT_R/$FNAME" 
 printf "\t [2/3] Exporting frames...\n"
 python exportFrames.py $FNAME $FRNUM $PT_R $PT_F

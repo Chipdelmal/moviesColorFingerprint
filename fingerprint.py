@@ -63,12 +63,11 @@ else:
     aux.exportFingerprintPlot(
         OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
         aspect=35,# FRAMES/DOMINANT, 
-        movieTitle=' '+str(TITLE).format(), 
-        fontsize=3, fontfamily='Liberation Sans Narrow', # fontfamily='Gotham XLight', 
+        movieTitle=' '+str(TITLE).format(), fontsize=3, 
+        fontfamily='Liberation Sans Narrow', # fontfamily='Gotham XLight', 
         color='#ffffff', textpos=(-.12, 0.475),
         facecolor='#000000FF', 
-        hspan=(0, 0),
-        halign='left', valign='center'
+        hspan=(0, 0), halign='left', valign='center'
     )
 # Export colorfiles -----------------------------------------------------------
 with open(path.join(OUT_PATH, FILE+'.pkl'),'wb') as file:

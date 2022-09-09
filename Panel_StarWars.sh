@@ -19,14 +19,17 @@ M_NAMES=(
 # Iterate through files
 ###############################################################################
 for idx in "${!F_NAMES[@]}"; do
-  file=${F_NAMES[$idx]}
-  title=${M_NAMES[$idx]}
-  bash fingerprint.sh $PT_I $PT_O "$file" "$title"
+    file=${F_NAMES[$idx]}
+    title=${M_NAMES[$idx]}
+    bash fingerprint.sh $PT_I $PT_O "$file" "$title"
 done
 ###############################################################################
 # Assemble grid
 ###############################################################################
 image-grid \
     --folder "${PT_O}" \
-    --out "${PT_I}/Art.png" \
-    -y -bs 25 -w 3960 -bc 255 -bsa 25 --interpolation lanczos
+    --out "${PT_I}/Panel.png" \
+    -bs 25  -bc 255 -bsa 25
+    -w 3960 # -a 1.7
+    --interpolation lanczos 
+    -y
