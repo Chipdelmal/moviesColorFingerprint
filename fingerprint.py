@@ -34,6 +34,7 @@ else:
         sys.argv[6], sys.argv[7], sys.argv[8]
     )
     TITLE = bytes(TITLE, "utf-8").decode("unicode_escape")
+STRIP = False
 # Get frames paths and calculate the dominant clusters of the images ----------
 IN_PATH = path.join(IN_PATH, FILE)
 filepaths = aux.getFilepaths(IN_PATH, FILE)
@@ -48,24 +49,27 @@ else:
     )
 # clusters = aux.calculateDominantColors(filepaths, DOMINANT, CLUSTERS)
 # Export the resulting fingerprints -------------------------------------------
-# lo = .4
-# aux.exportFingerprintPlot(
-#     OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
-#     aspect=FRAMES/DOMINANT, movieTitle=str(TITLE).format(), 
-#     fontsize=150, fontfamily='Gotham XLight', 
-#     color='#FFFFFFFF', textpos=(0.5, (.5-lo)/2),
-#     facecolor='#000000FF', hspan=(lo, .5)
-# )
-aux.exportFingerprintPlot(
-    OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
-    aspect=35,# FRAMES/DOMINANT, 
-    movieTitle=' '+str(TITLE).format(), 
-    fontsize=4, fontfamily='Liberation Sans Narrow', # fontfamily='Gotham XLight', 
-    color='#ffffff', textpos=(-.12, 0.475),
-    facecolor='#000000FF', 
-    hspan=(0, 0),
-    halign='left', valign='center'
-)
+if not STRIP:
+    lo = .4
+    aux.exportFingerprintPlot(
+        OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
+        aspect=FRAMES/DOMINANT, movieTitle=str(TITLE).format(), 
+        fontsize=22.5, fontfamily='Gotham XLight', 
+        color='#FFFFFFFF', textpos=(0.5, (.5-lo)/2),
+        facecolor='#000000FF', hspan=(lo, .5),
+        halign='center', valign='center'
+    )
+else:
+    aux.exportFingerprintPlot(
+        OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
+        aspect=35,# FRAMES/DOMINANT, 
+        movieTitle=' '+str(TITLE).format(), 
+        fontsize=3, fontfamily='Liberation Sans Narrow', # fontfamily='Gotham XLight', 
+        color='#ffffff', textpos=(-.12, 0.475),
+        facecolor='#000000FF', 
+        hspan=(0, 0),
+        halign='left', valign='center'
+    )
 # Export colorfiles -----------------------------------------------------------
 with open(path.join(OUT_PATH, FILE+'.pkl'),'wb') as file:
     pkl.dump(clusters, file)

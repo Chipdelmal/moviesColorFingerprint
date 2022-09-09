@@ -32,11 +32,11 @@ NC='\033[0m'
 # Rescale movie
 ###############################################################################
 printf "${LGREEN}* Processing: $FNAME ${NC}\n"
-printf "\t [1/3] Re-scaling $FNAME..."
-ffmpeg -n -loglevel panic -i "$PT_I/$FNAME" -vf "scale=$SCALE" "$PT_R/$FNAME"
-printf "\t [2/3] Exporting frames..."
+printf "\t [1/3] Re-scaling $FNAME...\n"
+ffmpeg -n -loglevel panic -i "$PT_I/$FNAME" -vf "scale=$SCALE" "$PT_R/$FNAME" 
+printf "\t [2/3] Exporting frames...\n"
 python exportFrames.py $FNAME $FRNUM $PT_R $PT_F
-printf "\t [3/3] Generating fingerprint..."
+printf "\t [3/3] Generating fingerprint...\n"
 python fingerprint.py "${FNAME%.*}" $DOM $CLS $FRNUM $DPI $PT_F $PT_O "$TITLE"
 # echo "[4/4] Generating colorspace plots..."
 # python plotColor.py "${FNAME%.*}" $DOM $CLS $FRNUM $DPI $PT_F $PT_O "$TITLE"
