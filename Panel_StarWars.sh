@@ -29,7 +29,7 @@ done
 image-grid \
     --folder "${PT_O}" \
     --out "${PT_I}/Panel.png" \
-    -bs 25  -bc 255 -bsa 25
-    -w 3960 # -a 1.7
-    --interpolation lanczos 
+    -bs 25  -bc 255 -bsa 25 \
+    -w 3960 \
+    --interpolation lanczos \
     -y

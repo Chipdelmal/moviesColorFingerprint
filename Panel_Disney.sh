@@ -19,23 +19,29 @@ F_NAMES=(
     "1981_TheFoxAndTheHound.mp4" "1985_TheBlackCauldron.mp4"
     "1986_TheAdventuresOfTheGreatMouseDetective.mp4"
     "1988_OliverAndCompany.mp4" "1989_TheLittleMermaid.mp4"
-    "1990_TheRescuersDownUnder.mp4"
+    "1990_TheRescuersDownUnder.mp4" "1991_BeautyAndTheBeast.mp4" "1992_Aladdin.mp4" 
+    "1993_TheNightmareBeforeChristmas.mp4" "1995_AGoofyMovie.mp4"
+    "1994_TheLionKing.mp4" "1995_Pocahontas.mp4" "1997_Hercules.mp4" "1999_Tarzan.mp4"
+    "2000_TheEmperorsNewGroove.mp4" "2000_Dinosaur.mp4"
 )
 M_NAMES=(
     "Snow White and the Seven Dwarfs\n(1937)"
-    "Fantasia\n(1940)" "Pinocchio\n(1940)" "Dumbo\n(1941)" "The Reluctant Dragon (1941)"
-    "Bambi\n(1942)" "Saludos Amigos\n(1942)" "The Three Caballeros (1944)"
+    "Fantasia\n(1940)" "Pinocchio\n(1940)" "Dumbo\n(1941)" "The Reluctant Dragon\n(1941)"
+    "Bambi\n(1942)" "Saludos Amigos\n(1942)" "The Three Caballeros\n(1944)"
     "Melody Time\n(1948)" "The Adventures of Ichabod and Mr. Toad\n(1949)"
     "Cinderella\n(1950)" "Alice in Wonderland\n(1951)" "Peter Pan\n(1953)"
     "Lady and the Tramp\n(1955)" "Sleeping Beauty\n(1959)"
-    "101 Dalmatians (1961)" "The Sword in the Stone\n(1963)"
+    "101 Dalmatians\n(1961)" "The Sword in the Stone\n(1963)"
     "The Jungle Book\n(1967)"
     "The Aristocats\n(1970)" "Robin Hood\n(1973)"
     "The Many Adventures of Winnie the Pooh\n(1977)" "The Rescuers\n(1977)"
     "The Fox and the Hound\n(1981)" "The Black Cauldron\n(1985)"
     "The Adventures of the Great Mouse Detective\n(1986)"
     "Oliver and Company\n(1988)" "The Little Mermaid\n(1989)"
-    "The Rescuers Down Under\n(1990)"
+    "The Rescuers Down Under\n(1990)" "Beauty and the Beast\n(1991)" "Aladdin\n(1992)"
+    "The Nightmare Before Christmas\n(1993)" "A Goofy Movie\n(1995)"
+    "The Lion King\n(1994)" "Pocahontas\n(1995)" "Hercules\n(1997)" "Tarzan\n(1999)"
+    "The Emperor's New Groove\n(2000)" "Dinosaur\n(2000)"
 )
 ###############################################################################
 # Iterate through files
@@ -51,7 +57,7 @@ done
 image-grid \
     --folder "${PT_O}" \
     --out "${PT_I}/Panel.png" \
-    -bs 25  -bc 255 -bsa 25
-    -w 3960 # -a 1.7
-    --interpolation lanczos 
+    -bs 25  -bc 255 -bsa 25 \
+    -w 3960 \
+    --interpolation lanczos \
     -y
