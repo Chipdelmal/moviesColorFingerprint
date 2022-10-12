@@ -19,10 +19,16 @@ F_NAMES=(
     "1981_TheFoxAndTheHound.mp4" "1985_TheBlackCauldron.mp4"
     "1986_TheAdventuresOfTheGreatMouseDetective.mp4"
     "1988_OliverAndCompany.mp4" "1989_TheLittleMermaid.mp4"
-    "1990_TheRescuersDownUnder.mp4" "1991_BeautyAndTheBeast.mp4" "1992_Aladdin.mp4" 
+    "1990_TheRescuersDownUnder.mp4" "1990_DuckTalesTreasureOfTheLostLamp.mp4"
+    "1991_BeautyAndTheBeast.mp4" "1992_Aladdin.mp4" 
     "1993_TheNightmareBeforeChristmas.mp4" "1995_AGoofyMovie.mp4"
-    "1994_TheLionKing.mp4" "1995_Pocahontas.mp4" "1997_Hercules.mp4" "1999_Tarzan.mp4"
-    "2000_TheEmperorsNewGroove.mp4" "2000_Dinosaur.mp4"
+    "1994_TheLionKing.mp4" "1995_Pocahontas.mp4" "1996_TheHunchbackOfNotreDame.mp4"
+    "1995_ToyStory.mp4" "1996_JamesAndTheGiantPeach.mp4" "1997_Hercules.mp4" "1999_Tarzan.mp4"
+    "1999_Fantasia2000.mp4" "2000_TheEmperorsNewGroove.mp4" "2000_Dinosaur.mp4" 
+    "2002_TreasurePlanet.mp4" "2003_BrotherBear.mp4" "2005_Valiant.mp4"
+    "2006_Cars.mp4" "2008_WallE.mp4" "2013_TheWindRises.mp4"
+    "2016_Moana.mp4" "2017_Coco.mp4" "2019_MalifiscentMistressOfEvil.mp4"
+    "2021_Encanto.mp4" "2022_TurningRed.mp4"
 )
 M_NAMES=(
     "Snow White and the Seven Dwarfs\n(1937)"
@@ -38,10 +44,16 @@ M_NAMES=(
     "The Fox and the Hound\n(1981)" "The Black Cauldron\n(1985)"
     "The Adventures of the Great Mouse Detective\n(1986)"
     "Oliver and Company\n(1988)" "The Little Mermaid\n(1989)"
-    "The Rescuers Down Under\n(1990)" "Beauty and the Beast\n(1991)" "Aladdin\n(1992)"
+    "The Rescuers Down Under\n(1990)" "Duck Tales: Treasure of the Lost Lamp\n(1990)"
+    "Beauty and the Beast\n(1991)" "Aladdin\n(1992)"
     "The Nightmare Before Christmas\n(1993)" "A Goofy Movie\n(1995)"
-    "The Lion King\n(1994)" "Pocahontas\n(1995)" "Hercules\n(1997)" "Tarzan\n(1999)"
-    "The Emperor's New Groove\n(2000)" "Dinosaur\n(2000)"
+    "The Lion King\n(1994)" "Pocahontas\n(1995)" "The Hunchback of Notre Dame\n(1996)"
+    "Toy Story\n(1995)" "James and the Giant Peach\n(1996)" "Hercules\n(1997)" "Tarzan\n(1999)"
+    "Fantasia 2000\n(1999)" "The Emperor's New Groove\n(2000)" "Dinosaur\n(2000)"
+    "Treasure Planet\n(2002)" "Brother Bear\n(2003)" "Valiant\n(2005)"
+    "Cars\n(2006)" "WALL-E\n(2008)" "The Wind Rises\n(2013)"
+    "Moana\n(2016)" "Coco\n(2017)" "Maleficent: Mistress of Evil\n(2019)"
+    "Encanto\n(2021)" "Turning Red\n(2022)"
 )
 ###############################################################################
 # Iterate through files
@@ -57,7 +69,7 @@ done
 image-grid \
     --folder "${PT_O}" \
     --out "${PT_I}/Panel.png" \
-    -bs 25  -bc 255 -bsa 25 \
-    -w 3960 \
+    -bs 10 -bsa 10 -bc 255 \
+    -w 3960 -c 10 \
     --interpolation lanczos \
     -y

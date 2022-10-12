@@ -11,6 +11,8 @@ import multiprocessing
 import auxiliary as aux
 import pickle as pkl
 import csv
+import numpy as np
+import matplotlib.pyplot as plt
 
 JOBS = multiprocessing.cpu_count()
 # User inputs -----------------------------------------------------------------
@@ -22,7 +24,7 @@ if aux.isNotebook():
     (IN_PATH, OUT_PATH, TITLE) = (
         "/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Frames", 
         "/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Art",
-        "Peter Pan"
+        "Peter Pan\n1953"
     )
 else:
     # For calls from the terminal ---------------------------------------------
@@ -35,6 +37,7 @@ else:
     )
     TITLE = bytes(TITLE, "utf-8").decode("unicode_escape")
 (STRIP, OVW) = (False, False)
+(ringRadius, barHeight) = (12, 15)
 # Get frames paths and calculate the dominant clusters of the images ----------
 IN_PATH = path.join(IN_PATH, FILE)
 filepaths = aux.getFilepaths(IN_PATH, FILE)
@@ -48,31 +51,31 @@ else:
         maxIter=100, VERBOSE=True, jobs=8
     )
 # clusters = aux.calculateDominantColors(filepaths, DOMINANT, CLUSTERS)
-# Export the resulting fingerprints -------------------------------------------
-if not STRIP:
-    lo = .4
-    aux.exportFingerprintPlot(
-        OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
-        aspect=FRAMES/DOMINANT, movieTitle=str(TITLE).format(), 
-        fontsize=22.5, fontfamily='Gotham XLight', 
-        color='#FFFFFFFF', textpos=(0.5, (.5-lo)/2),
-        facecolor='#000000FF', hspan=(lo, .5),
-        halign='center', valign='center'
-    )
-else:
-    aux.exportFingerprintPlot(
-        OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
-        aspect=35,# FRAMES/DOMINANT, 
-        movieTitle=' '+str(TITLE).format(), fontsize=3, 
-        fontfamily='Liberation Sans Narrow', # fontfamily='Gotham XLight', 
-        color='#ffffff', textpos=(-.12, 0.475),
-        facecolor='#000000FF', 
-        hspan=(0, 0), halign='left', valign='center'
-    )
-# Export colorfiles -----------------------------------------------------------
-with open(path.join(OUT_PATH, FILE+'.pkl'),'wb') as file:
-    pkl.dump(clusters, file)
-hexList = [[aux.rgb_to_hex(i) for i in frame] for frame in clusters]
-with open(path.join(OUT_PATH, FILE+'.csv'), "w") as f:
-    wr = csv.writer(f)
-    wr.writerows(hexList)
+###############################################################################
+# Plot Iris
+###############################################################################
+plt.rcParams['font.size'] = '30'
+(astart, aend) = (0+.05, 4*np.pi/2-.05)
+ANGLES = np.linspace(astart, aend, clusters.shape[0], endpoint=False)
+COLORS = [list(i[0]) for i in clusters]
+# Figure ----------------------------------------------------------------------
+(fig, ax) = plt.subplots(figsize=(8, 8), subplot_kw={"projection": "polar"})
+fig.add_axes(ax)
+ax.set_theta_zero_location('N')
+ax.set_theta_direction(-1)
+ax.set_axis_off()
+ax.set_rscale('linear')
+ax.vlines(
+    ANGLES, ringRadius, ringRadius+barHeight, 
+    lw=1, colors=COLORS, alpha=1, 
+    zorder=-1
+)
+plt.text(
+    .5, .5, f'{TITLE}', 
+    color='#ffffff88', font='Gotham Light',
+    horizontalalignment='center', verticalalignment='center',
+    transform=ax.transAxes
+)
+ax.set_ylim(0, ringRadius+barHeight)
+ax.set_facecolor("k")
+fig.patch.set_facecolor("k")
