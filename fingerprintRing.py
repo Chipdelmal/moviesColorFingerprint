@@ -19,12 +19,12 @@ JOBS = multiprocessing.cpu_count()
 if aux.isNotebook():
     # For testing and debugging in jupyter ------------------------------------
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
-        "1953_PeterPan", 1, 3, 3600, 1250
+        "2003_BrotherBear", 1, 3, 3600, 1250
     )
     (IN_PATH, OUT_PATH, TITLE) = (
         "/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Frames", 
         "/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Art",
-        "Peter Pan\n1953"
+        "Brother Bear\n2003"
     )
 else:
     # For calls from the terminal ---------------------------------------------
@@ -37,7 +37,7 @@ else:
     )
     TITLE = bytes(TITLE, "utf-8").decode("unicode_escape")
 (STRIP, OVW) = (False, False)
-(ringRadius, barHeight) = (12, 15)
+(ringRadius, barHeight) = (15, 8)
 # Get frames paths and calculate the dominant clusters of the images ----------
 IN_PATH = path.join(IN_PATH, FILE)
 filepaths = aux.getFilepaths(IN_PATH, FILE)
@@ -54,14 +54,15 @@ else:
 ###############################################################################
 # Plot Iris
 ###############################################################################
-plt.rcParams['font.size'] = '30'
-(astart, aend) = (0+.05, 4*np.pi/2-.05)
+plt.rcParams['font.size'] = '25'
+(astart, aend) = (0, 2*np.pi/2)
 ANGLES = np.linspace(astart, aend, clusters.shape[0], endpoint=False)
 COLORS = [list(i[0]) for i in clusters]
+LABEL =  f'{TITLE}'  #f'{TITLE}'.replace('\n', ' (')+')',
 # Figure ----------------------------------------------------------------------
 (fig, ax) = plt.subplots(figsize=(8, 8), subplot_kw={"projection": "polar"})
 fig.add_axes(ax)
-ax.set_theta_zero_location('N')
+ax.set_theta_zero_location('W')
 ax.set_theta_direction(-1)
 ax.set_axis_off()
 ax.set_rscale('linear')
@@ -71,11 +72,19 @@ ax.vlines(
     zorder=-1
 )
 plt.text(
-    .5, .5, f'{TITLE}', 
-    color='#ffffff88', font='Gotham Light',
-    horizontalalignment='center', verticalalignment='center',
+    .5, .5, LABEL, 
+    color='#000000CC', font='Gotham Light', rotation=0,
+    horizontalalignment='center', verticalalignment='bottom',
     transform=ax.transAxes
 )
+plt.tight_layout()
+# ax.set_xlim(0, ringRadius+barHeight)
 ax.set_ylim(0, ringRadius+barHeight)
-ax.set_facecolor("k")
-fig.patch.set_facecolor("k")
+# ax.set_facecolor("#000000CC")
+# fig.patch.set_facecolor("#000000CC")
+plt.savefig(
+    OUT_PATH + '/' + FILE+'_R.png', dpi=300,
+    pad_inches=0,
+    transparent=True
+)
+plt.close()
