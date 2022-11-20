@@ -9,7 +9,7 @@ F_NAMES=(
     "1937_SnowWhiteAndTheSevenDwarfs.mp4"
     "1940_Fantasia.mp4" "1940_Pinocchio.mp4" "1941_Dumbo.mp4" "1941_TheReluctantDragon.mp4"
     "1942_Bambi.mp4" "1942_SaludosAmigos.mp4" "1944_TheThreeCaballeros.mp4"
-    "1948_MelodyTime.mp4" "1949_TheAdventuresOfIchabodAndMrToad.mp4"
+    "1946_MakeMineMusic.mp4" "1947_FunAndFancyFree.mp4" "1948_MelodyTime.mp4" "1949_TheAdventuresOfIchabodAndMrToad.mp4"
     "1950_Cinderella.mp4" "1951_AliceInWonderland.mp4" "1953_PeterPan.mp4" 
     "1955_LadyAndTheTramp.mp4" "1959_SleepingBeauty.mp4"
     "1961_101Dalmatians.mp4" "1963_TheSwordInTheStone.mp4"
@@ -26,15 +26,15 @@ F_NAMES=(
     "1995_ToyStory.mp4" "1996_JamesAndTheGiantPeach.mp4" "1997_Hercules.mp4" "1999_Tarzan.mp4"
     "1999_Fantasia2000.mp4" "2000_TheEmperorsNewGroove.mp4" "2000_Dinosaur.mp4" 
     "2002_TreasurePlanet.mp4" "2003_BrotherBear.mp4" "2005_Valiant.mp4"
-    "2006_Cars.mp4" "2008_WallE.mp4" "2013_TheWindRises.mp4"
-    "2016_Moana.mp4" "2017_Coco.mp4" "2019_MalifiscentMistressOfEvil.mp4"
-    "2021_Encanto.mp4" "2022_TurningRed.mp4"
+    "2006_Cars.mp4" "2008_WallE.mp4" "2010_TinkerBellAndTheGreatFairyRescue.mp4" "2011_WinnieThePooh.mp4" "2013_TheWindRises.mp4"
+    "2016_Moana.mp4" "2017_Coco.mp4" "2018_MaryPoppinsReturns.mp4" "2019_Aladdin.mp4" "2019_MalifiscentMistressOfEvil.mp4"
+    "2021_Encanto.mp4" "2021_RayaAndTheLastDragon.mp4" "2021_TinkerBellAndTheLegendOfTheNeverBeast.mp4" "2022_TurningRed.mp4"
 )
 M_NAMES=(
     "Snow White and the Seven Dwarfs\n(1937)"
     "Fantasia\n(1940)" "Pinocchio\n(1940)" "Dumbo\n(1941)" "The Reluctant Dragon\n(1941)"
     "Bambi\n(1942)" "Saludos Amigos\n(1942)" "The Three Caballeros\n(1944)"
-    "Melody Time\n(1948)" "The Adventures of Ichabod and Mr. Toad\n(1949)"
+    "Make Mine Music\n(1947)" "Fun and Fancy Free\n(1947)" "Melody Time\n(1948)" "The Adventures of Ichabod and Mr. Toad\n(1949)"
     "Cinderella\n(1950)" "Alice in Wonderland\n(1951)" "Peter Pan\n(1953)"
     "Lady and the Tramp\n(1955)" "Sleeping Beauty\n(1959)"
     "101 Dalmatians\n(1961)" "The Sword in the Stone\n(1963)"
@@ -51,9 +51,9 @@ M_NAMES=(
     "Toy Story\n(1995)" "James and the Giant Peach\n(1996)" "Hercules\n(1997)" "Tarzan\n(1999)"
     "Fantasia 2000\n(1999)" "The Emperor's New Groove\n(2000)" "Dinosaur\n(2000)"
     "Treasure Planet\n(2002)" "Brother Bear\n(2003)" "Valiant\n(2005)"
-    "Cars\n(2006)" "WALL-E\n(2008)" "The Wind Rises\n(2013)"
-    "Moana\n(2016)" "Coco\n(2017)" "Maleficent: Mistress of Evil\n(2019)"
-    "Encanto\n(2021)" "Turning Red\n(2022)"
+    "Cars\n(2006)" "WALL-E\n(2008)" "Tinker Bell and the Great Fairy Rescue\n(2010)" "Winnie the Pooh\n(2011)" "The Wind Rises\n(2013)"
+    "Moana\n(2016)" "Coco\n(2017)" "Mary Poppins Returns\n(2018)" "Aladdin\n(2019)" "Maleficent: Mistress of Evil\n(2019)"
+    "Encanto\n(2021)" "Raya and the Last Dragon\n(2021)" "Tinker Bell and the Legend of the Never Beast\n(2021)" "Turning Red\n(2022)"
 )
 ###############################################################################
 # Iterate through files
