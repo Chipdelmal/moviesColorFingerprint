@@ -26,9 +26,13 @@ F_NAMES=(
     "1995_ToyStory.mp4" "1996_JamesAndTheGiantPeach.mp4" "1997_Hercules.mp4" "1999_Tarzan.mp4"
     "1999_Fantasia2000.mp4" "2000_TheEmperorsNewGroove.mp4" "2000_Dinosaur.mp4" 
     "2002_TreasurePlanet.mp4" "2003_BrotherBear.mp4" "2005_Valiant.mp4"
-    "2006_Cars.mp4" "2008_WallE.mp4" "2010_TinkerBellAndTheGreatFairyRescue.mp4" "2011_WinnieThePooh.mp4" "2013_TheWindRises.mp4"
-    "2016_Moana.mp4" "2017_Coco.mp4" "2018_MaryPoppinsReturns.mp4" "2019_Aladdin.mp4" "2019_MalifiscentMistressOfEvil.mp4"
+    "2006_Cars.mp4" "2007_Enchanted.mp4" "2008_WallE.mp4" "2010_TinkerBellAndTheGreatFairyRescue.mp4" "2011_WinnieThePooh.mp4" "2013_TheWindRises.mp4"
+    "2013_Frozen.mp4" "2013_Planes.mp4"
+    "2014_BigHero.mp4" "2014_PlanesFireAndRescue.mp4" "2014_TinkerBellAndThePirateFairy.mp4" "2016_TheJungleBook.mp4"
+    "2016_Moana.mp4" "2017_Cars3.mp4" "2017_Coco.mp4" "2018_MaryPoppinsReturns.mp4" "2019_Aladdin.mp4" "2019_MalifiscentMistressOfEvil.mp4"
+    "2019_TheLionKing.mp4" "2019_Frozen2.mp4"
     "2021_Encanto.mp4" "2021_RayaAndTheLastDragon.mp4" "2021_TinkerBellAndTheLegendOfTheNeverBeast.mp4" "2022_TurningRed.mp4"
+    "2022_Lightyear.mp4"
 )
 M_NAMES=(
     "Snow White and the Seven Dwarfs\n(1937)"
@@ -51,9 +55,13 @@ M_NAMES=(
     "Toy Story\n(1995)" "James and the Giant Peach\n(1996)" "Hercules\n(1997)" "Tarzan\n(1999)"
     "Fantasia 2000\n(1999)" "The Emperor's New Groove\n(2000)" "Dinosaur\n(2000)"
     "Treasure Planet\n(2002)" "Brother Bear\n(2003)" "Valiant\n(2005)"
-    "Cars\n(2006)" "WALL-E\n(2008)" "Tinker Bell and the Great Fairy Rescue\n(2010)" "Winnie the Pooh\n(2011)" "The Wind Rises\n(2013)"
-    "Moana\n(2016)" "Coco\n(2017)" "Mary Poppins Returns\n(2018)" "Aladdin\n(2019)" "Maleficent: Mistress of Evil\n(2019)"
+    "Cars\n(2006)" "Enchanted\n(2007)" "WALL-E\n(2008)" "Tinker Bell and the Great Fairy Rescue\n(2010)" "Winnie the Pooh\n(2011)" "The Wind Rises\n(2013)"
+    "Frozen\n(2013)" "Planes\n(2013)"
+    "Big hero\n(2014)" "Planes: Fire & Rescue\n(2014)" "Tinker Bell and the Pirate Fairy\n(2014)" "The Jungle Book\n(2016)"
+    "Moana\n(2016)" "Cars 3\n(2017)" "Coco\n(2017)" "Mary Poppins Returns\n(2018)" "Aladdin\n(2019)" "Maleficent: Mistress of Evil\n(2019)"
+    "The Lion King\n(2019)" "Frozen II\n(2019)"
     "Encanto\n(2021)" "Raya and the Last Dragon\n(2021)" "Tinker Bell and the Legend of the Never Beast\n(2021)" "Turning Red\n(2022)"
+    "Lightyear\n(2022)"
 )
 ###############################################################################
 # Iterate through files
