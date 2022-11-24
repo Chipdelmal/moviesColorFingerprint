@@ -1,7 +1,9 @@
 #!/bin/bash
 
-PT_I='/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney'
-PT_O='/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Art'
+# PT_I='/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney'
+# PT_O='/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Art'
+PT_I='/media/chipdelmal/Eunie/Disney'
+PT_O='/media/chipdelmal/Eunie/Disney/Art'
 ###############################################################################
 # Filenames and titles
 ###############################################################################

@@ -49,30 +49,31 @@ else:
     )
 # clusters = aux.calculateDominantColors(filepaths, DOMINANT, CLUSTERS)
 # Export the resulting fingerprints -------------------------------------------
-if not STRIP:
-    lo = .4
-    aux.exportFingerprintPlot(
-        OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
-        aspect=FRAMES/DOMINANT, movieTitle=str(TITLE).format(), 
-        fontsize=22.5, fontfamily='Gotham XLight', 
-        color='#FFFFFFFF', textpos=(0.5, (.5-lo)/2),
-        facecolor='#000000FF', hspan=(lo, .5),
-        halign='center', valign='center'
-    )
-else:
-    aux.exportFingerprintPlot(
-        OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
-        aspect=35,# FRAMES/DOMINANT, 
-        movieTitle=' '+str(TITLE).format(), fontsize=3, 
-        fontfamily='Liberation Sans Narrow', # fontfamily='Gotham XLight', 
-        color='#ffffff', textpos=(-.12, 0.475),
-        facecolor='#000000FF', 
-        hspan=(0, 0), halign='left', valign='center'
-    )
-# Export colorfiles -----------------------------------------------------------
-with open(path.join(OUT_PATH, FILE+'.pkl'),'wb') as file:
-    pkl.dump(clusters, file)
-hexList = [[aux.rgb_to_hex(i) for i in frame] for frame in clusters]
-with open(path.join(OUT_PATH, FILE+'.csv'), "w") as f:
-    wr = csv.writer(f)
-    wr.writerows(hexList)
+if not path.isfile(path.join(OUT_PATH, FILE+'.png')) or OVW:
+    if not STRIP:
+        lo = .4
+        aux.exportFingerprintPlot(
+            OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
+            aspect=FRAMES/DOMINANT, movieTitle=str(TITLE).format(), 
+            fontsize=22.5, fontfamily='Gotham XLight', 
+            color='#FFFFFFFF', textpos=(0.5, (.5-lo)/2),
+            facecolor='#000000FF', hspan=(lo, .5),
+            halign='center', valign='center'
+        )
+    else:
+        aux.exportFingerprintPlot(
+            OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
+            aspect=35,# FRAMES/DOMINANT, 
+            movieTitle=' '+str(TITLE).format(), fontsize=3, 
+            fontfamily='Liberation Sans Narrow', # fontfamily='Gotham XLight', 
+            color='#ffffff', textpos=(-.12, 0.475),
+            facecolor='#000000FF', 
+            hspan=(0, 0), halign='left', valign='center'
+        )
+    # Export colorfiles -------------------------------------------------------
+    with open(path.join(OUT_PATH, FILE+'.pkl'),'wb') as file:
+        pkl.dump(clusters, file)
+    hexList = [[aux.rgb_to_hex(i) for i in frame] for frame in clusters]
+    with open(path.join(OUT_PATH, FILE+'.csv'), "w") as f:
+        wr = csv.writer(f)
+        wr.writerows(hexList)
