@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PT_I='/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/StarWars'
-PT_O='/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/StarWars/Art'
+PT_I='/media/chipdelmal/Eunie/StarWars'
+PT_O='/media/chipdelmal/Eunie/StarWars/Art'
 ###############################################################################
 # Filenames and titles
 ###############################################################################
