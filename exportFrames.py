@@ -11,8 +11,11 @@ import ffmpeg
 
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
-    (FILE, FRAMES_NUM) = ("interstellar.mp4", 500)
-    (IN_PATH, OUT_PATH) = ("./rescaled/", "./frames/")
+    (FILE, FRAMES_NUM) = ("RogueOne.mp4", 250)
+    (IN_PATH, OUT_PATH) = (
+        "/Users/chipdelmal/Movies/Fingerprint/rescaled", 
+        "/Users/chipdelmal/Movies/Fingerprint/frames"
+    )
 else:
     (FILE, FRAMES_NUM) = (sys.argv[1], int(sys.argv[2]))
     (IN_PATH, OUT_PATH) = (sys.argv[3], sys.argv[4])
