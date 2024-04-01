@@ -12,13 +12,13 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 
 
 (FNAME, PT_IN, PT_OUT, PT_EXP) = (
-    'RogueOne',
+    'IntoSpiderVerse',
     '/Users/chipdelmal/Movies/Fingerprint',
     '/Users/chipdelmal/Movies/Fingerprint/out',
     '/Users/chipdelmal/Movies/Fingerprint/art'
 )
-(FRAMES, DOMINANT, CLUSTERS) = (250, 1, 3)
-(STEP, IN_OFF) = (int(.25e3), 4)
+(FRAMES, DOMINANT, CLUSTERS, OVW) = (250, 1, 3, False)
+(STEP, IN_OFF) = (100, 4)
 (BITS, SCALE, CLIP, MEAN_SIG) = ((0, 32767), (0, 5), (0, 10), 5e3)
 (DIFF_AMP, ROLL_PAD) = (1.35, 10)
 ###############################################################################
@@ -33,7 +33,7 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 ###############################################################################
 filepaths = aux.getFilepaths(FRIN, FNAME)
 pklFile = path.join(PT_OUT, FNAME+'.pkl')
-if path.isfile(pklFile):
+if path.isfile(pklFile) and not OVW:
     with open(pklFile, 'rb') as f:
         clusters = pkl.load(f)
 else:
@@ -63,15 +63,20 @@ sigSrt = sigAbs if (np.median(sigAbs[1]) < np.median(sigAbs[0])) else sigAbs[::-
 M_POWER = np.mean(sigAbs[0]+sigAbs[1])/2
 sigSca = [np.interp(sig, BITS, (SCALE[0], SCALE[1]*MEAN_SIG/M_POWER)) for sig in sigSrt]
 sigClp = [np.clip(sig, CLIP[0], CLIP[1]) for sig in sigSca]
+# Get Kernel ------------------------------------------------------------------
+KERNEL = np.ones(STEP)/STEP
+sigSmt = [np.convolve(i, KERNEL, mode='full') for i in sigClp]
+sigPad = (np.pad(sigSmt[0], (ROLL_PAD, 0), mode='constant')[:-ROLL_PAD], sigSmt[1])
+sigSmp = [i[0::STEP] for i in sigPad]
 # Get soundframes -------------------------------------------------------------
-sndArray = sigSca[0]
+sndArray = sigSmp[0]
 idx = np.round(np.linspace(0, len(sndArray)-1, FRAMES)).astype(int)
 m = sndArray[idx]
-sndFrames = np.where(m!=0, abs(np.log(m)), 0)
+sndFrames = np.where(m!=0, abs(m)+0.75, 0)
 ###############################################################################
 # Plot
 ###############################################################################
-(VERT, SPACING, IMGOFF) = (False, 20, 1.5)
+(VERT, SPACING, IMGOFF) = (False, 20, 1.05)
 (fig, ax) = plt.subplots(figsize=(20, 4))
 for (ix, sndHeight) in enumerate(sndFrames):
     if VERT:
@@ -90,20 +95,21 @@ for (ix, sndHeight) in enumerate(sndFrames):
         imagebox = OffsetImage(img, zoom=0.05)
         off = -IMGOFF if (ix%2==0) else -2*IMGOFF
         ab = AnnotationBbox(
-            imagebox, (ix*SPACING, off), frameon=False,
+            imagebox, (ix*SPACING, -0.1+off), frameon=False,
             box_alignment=(0.5, 0.5)
         )
         ax.add_artist(ab)
         # Add callout line ----------------------------------------------------
         ax.plot(
-            x, [0, off], 
+            x, [0, -0.1+off], 
             lw=1.5, color=hexList[ix][0], solid_capstyle='round',
             zorder=1, ls=':'
         )
 ax.set_xlim(-25, sndFrames.shape[0]*SPACING+25)
-ax.set_ylim(-5, 10)
+ax.set_ylim(-5, np.max(sndFrames)+1)
 ax.set_axis_off()
 fig.savefig(
     path.join(PT_EXP, FNAME+'.png'), dpi=500,
-    pad_inches=0, bbox_inches='tight'
+    pad_inches=0, bbox_inches='tight',
+    transparent=True
 )

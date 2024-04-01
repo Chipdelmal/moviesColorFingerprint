@@ -11,7 +11,7 @@ import ffmpeg
 
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
-    (FILE, FRAMES_NUM) = ("RogueOne.mp4", 250)
+    (FILE, FRAMES_NUM) = ("IntoSpiderVerse.mp4", 300)
     (IN_PATH, OUT_PATH) = (
         "/Users/chipdelmal/Movies/Fingerprint/rescaled", 
         "/Users/chipdelmal/Movies/Fingerprint/frames"
