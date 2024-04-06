@@ -11,15 +11,15 @@ import ffmpeg
 
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
-    (FILE, FRAMES_NUM) = ("TheMartian.mp4", 300)
-    (IN_PATH, OUT_PATH) = (
-        "/Users/chipdelmal/Movies/Fingerprint/rescaled", 
-        "/Users/chipdelmal/Movies/Fingerprint/frames"
+    (FILE, IN_PATH, OUT_PATH) = (
+        'RobotDreams.mp4',
+        '/Users/chipdelmal/Movies/Fingerprint/rescaled', 
+        '/Users/chipdelmal/Movies/Fingerprint/frames'
     )
 else:
     (FILE, FRAMES_NUM) = (sys.argv[1], int(sys.argv[2]))
     (IN_PATH, OUT_PATH) = (sys.argv[3], sys.argv[4])
-OVW = False
+(FRAMES_NUM, OVW) = (300, True)
 # Output path -----------------------------------------------------------------
 pthStr = FILE.split(".")[0]
 OUT_PATH = path.join(OUT_PATH, pthStr)

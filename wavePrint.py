@@ -12,13 +12,13 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 
 
 (FNAME, PT_IN, PT_OUT, PT_EXP) = (
-    'TheMartian',
+    'RobotDreams',
     '/Users/chipdelmal/Movies/Fingerprint',
     '/Users/chipdelmal/Movies/Fingerprint/out',
     '/Users/chipdelmal/Movies/Fingerprint/art'
 )
 (FRAMES, DOMINANT, CLUSTERS, OVW) = (300, 1, 3, True)
-(STEP, IN_OFF) = (250, 4)
+(STEP, IN_OFF) = (1000, 4)
 (BITS, SCALE, CLIP, MEAN_SIG) = ((0, 32767), (0, 5), (0, 10), 5e3)
 (DIFF_AMP, ROLL_PAD) = (1.35, 10)
 ###############################################################################
@@ -56,7 +56,10 @@ channels = sound.split_to_mono()
 bitDepth = channels[0].sample_width*8
 arrayType = get_array_type(bitDepth)
 # Get signal ------------------------------------------------------------------
-sigRaw = [array.array(arrayType, sig) for sig in [i._data for i in channels]]
+if len(channels)>1:
+    sigRaw = [array.array(arrayType, sig) for sig in [i._data for i in channels]]
+else:
+    sigRaw = [array.array(arrayType, sig) for sig in [i._data for i in channels*2]]
 sigAbs = [np.abs(np.array(sig), dtype=np.int64) for sig in sigRaw]
 sigSrt = sigAbs if (np.median(sigAbs[1]) < np.median(sigAbs[0])) else sigAbs[::-1]
 # Scale signal for plot -------------------------------------------------------
@@ -72,7 +75,7 @@ sigSmp = [i[0::STEP] for i in sigPad]
 sndArray = sigSmp[0]
 idx = np.round(np.linspace(0, len(sndArray)-1, FRAMES)).astype(int)
 m = sndArray[idx]
-sndFrames = np.where(m!=0, abs(np.sqrt(m))+0.5, 0)
+sndFrames = np.where(m!=0, abs(np.sqrt(m))+0.2, 0)
 ###############################################################################
 # Plot
 ###############################################################################
@@ -80,9 +83,9 @@ sndFrames = np.where(m!=0, abs(np.sqrt(m))+0.5, 0)
 (fig, ax) = plt.subplots(figsize=(20, 4))
 for (ix, sndHeight) in enumerate(sndFrames):
     if VERT:
-        (x, y) = ([-.1, sndHeight], [ix*SPACING, ix*SPACING])
+        (x, y) = ([-.05, sndHeight], [ix*SPACING, ix*SPACING])
     else:
-        (y, x) = ([-.1, sndHeight], [ix*SPACING, ix*SPACING])
+        (y, x) = ([-.05, sndHeight], [ix*SPACING, ix*SPACING])
     # Plot waveform -----------------------------------------------------------
     ax.plot(
         x, y, 
@@ -91,10 +94,10 @@ for (ix, sndHeight) in enumerate(sndFrames):
         zorder=1
     )
     # Plot image --------------------------------------------------------------
-    if (ix%5==0) and (ix>0):
+    if (ix%5==0) and (ix>=0):
         img = image.imread(filepaths[ix])
-        imagebox = OffsetImage(img, zoom=0.05)
-        off = -IMGOFF if (ix%2==0) else -2*IMGOFF
+        imagebox = OffsetImage(img, zoom=0.01)
+        off = (-0.5*IMGOFF) if (ix%2==0) else (-.95*IMGOFF)
         ab = AnnotationBbox(
             imagebox, (ix*SPACING, off-.1), frameon=False,
             box_alignment=(0.5, 0.5)
@@ -102,16 +105,16 @@ for (ix, sndHeight) in enumerate(sndFrames):
         ax.add_artist(ab)
         # Add callout line ----------------------------------------------------
         ax.plot(
-            x, [0, off-0.05], 
+            x, [0, off-0.1], 
             lw=1.5, color=hexList[ix][0], 
             solid_capstyle='round', ls=':',
             zorder=1
         )
 ax.set_xlim(-25, sndFrames.shape[0]*SPACING+25)
-ax.set_ylim(-5, np.max(sndFrames)+1)
+ax.set_ylim(-2.5, np.max(sndFrames)+1)
 ax.set_axis_off()
 fig.savefig(
-    path.join(PT_EXP, FNAME+'.png'), dpi=750,
+    path.join(PT_EXP, FNAME+'.png'), dpi=1000,
     pad_inches=0, bbox_inches='tight',
     transparent=True
 )
