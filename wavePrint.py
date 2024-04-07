@@ -12,7 +12,7 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 
 
 (FNAME, PT_IN, PT_OUT, PT_EXP, OVW) = (
-    'RobotDreams',
+    'Episode08',
     '/Users/chipdelmal/Movies/Fingerprint',
     '/Users/chipdelmal/Movies/Fingerprint/out',
     '/Users/chipdelmal/Movies/Fingerprint/art',
@@ -20,14 +20,14 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 )
 # Audio constants -------------------------------------------------------------
 (STEP, BAR_SPACING, LW, YOFFSET) = (1000, 20, 2.5, 0.075)
-(SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = ((0, 5), (0, 10), 5e3,  10, 0.2)
+(SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = ((0, 1), (0, 10), 5e3,  10, 0.225)
 # Image constants -------------------------------------------------------------
 (SFRAME, DFRAMES) = (0, 5)
-(OFFSETS, ZOOM, ROTATION) = ((-.5, -.85), 0.0125, 0)
-(FRAMES, DOMINANT, CLUSTERS) = (300, 1, 3)
+(OFFSETS, ZOOM, ROTATION) = ((-.35, -.35), 0.0175, 3)
+(FRAMES, DOMINANT, CLUSTERS) = (300, 1, 1)
 (CW, COFF) = (.9, 0.25)
 # Plot constants --------------------------------------------------------------
-(REVERSED, XRANGE, YRANGE) = (False, (-20, 20), (-1.5, .5))
+(REVERSED, XRANGE, YRANGE) = (False, (-20, 20), (-0.75, 0.1))
 ###############################################################################
 # Setup paths
 ###############################################################################
@@ -100,7 +100,7 @@ for (ix, sndHeight) in enumerate(sndFrames):
         offCounter = offCounter + 1
         # Add callout line ----------------------------------------------------
         ax.plot(
-            x, [0, off-0.1], 
+            x, [0, off], 
             lw=CW, color=hexList[ix][0], 
             solid_capstyle='round', ls=':', zorder=1
         )

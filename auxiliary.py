@@ -13,7 +13,7 @@ from operator import itemgetter
 from matplotlib import pyplot as plt
 from joblib import Parallel, delayed
 from joblib import dump, load
-from sklearn.cluster import MiniBatchKMeans
+from sklearn.cluster import KMeans, MiniBatchKMeans
 import matplotlib.font_manager
 from IPython.core.display import HTML
 
@@ -41,24 +41,24 @@ def dominantImage(
     ):
     (frame, shp) = img
     flatFrame = frame.reshape([1, shp[0] * shp[1], 3])[0]
-    kMeansCall = MiniBatchKMeans(n_clusters=clustersNum, max_iter=maxIter)
+    kMeansCall = KMeans(n_clusters=clustersNum, max_iter=maxIter)
     kmeans = kMeansCall.fit(flatFrame)
     # Take the color palette and add it to the clusters container
-    if (domColNum==1 and clustersNum==1):
-        palette = kmeans.cluster_centers_
-        clusters[i] = [rescaleColor(color) for color in palette]
-    else:
-        frequencies = {
-            key: len(list(group)) for key, group in groupby(sorted(kmeans.labels_))
-        }
-        dominant = dict(
-            sorted(frequencies.items(), key = itemgetter(1), reverse = True
-        )[:domColNum])
-        dominantKeys = list(dominant.keys())
-        palette = [kmeans.cluster_centers_[j] for j in dominantKeys]
-        myiter = cycle(palette)
-        pallettePad = [next(myiter) for _ in range(domColNum)]
-    colors = [rescaleColor(color) for color in pallettePad]
+    # if (domColNum==1 and clustersNum==1):
+    #     palette = kmeans.cluster_centers_
+    #     palettePad = [palette]
+    # else:
+    frequencies = {
+        key: len(list(group)) for key, group in groupby(sorted(kmeans.labels_))
+    }
+    dominant = dict(
+        sorted(frequencies.items(), key = itemgetter(1), reverse = True
+    )[:domColNum])
+    dominantKeys = list(dominant.keys())
+    palette = [kmeans.cluster_centers_[j] for j in dominantKeys]
+    myiter = cycle(palette)
+    palettePad = [next(myiter) for _ in range(domColNum)]
+    colors = [rescaleColor(color) for color in palettePad]
     return colors
 
 
@@ -73,7 +73,6 @@ def dominatImageWrapper(
     img = readAndProcessImg(filepaths[ix])
     cols = dominantImage(img, domColNum, clustersNum, maxIter=maxIter)
     clustersArray[ix] = cols
-    # print(clustersArray[ix-1:ix+1])
     return clustersArray
 
 

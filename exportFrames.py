@@ -12,14 +12,14 @@ import ffmpeg
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
     (FILE, IN_PATH, OUT_PATH) = (
-        'Episode06.mp4',
+        'Episode09.mp4',
         '/Users/chipdelmal/Movies/Fingerprint/rescaled', 
         '/Users/chipdelmal/Movies/Fingerprint/frames'
     )
 else:
     (FILE, FRAMES_NUM) = (sys.argv[1], int(sys.argv[2]))
     (IN_PATH, OUT_PATH) = (sys.argv[3], sys.argv[4])
-(FRAMES_NUM, OVW) = (300, True)
+(FRAMES_NUM, OVW, SIZE) = (300, True, (1692, 720))
 # Output path -----------------------------------------------------------------
 pthStr = FILE.split(".")[0]
 OUT_PATH = path.join(OUT_PATH, pthStr)
@@ -40,6 +40,7 @@ if (not folderExists) or (OVW):
         "ffmpeg -loglevel panic "
         + "-i " + path.join(IN_PATH, FILE) + " "
         + "-vf fps=" + str(fps) + " "
+        + f"-s {SIZE[0]}x{SIZE[1]} "
         + path.join(OUT_PATH, FILE.split(".")[0] + "%04d.png ")
         + "-hide_banner"
     )
