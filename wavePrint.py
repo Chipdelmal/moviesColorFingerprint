@@ -11,22 +11,23 @@ from pydub import (AudioSegment, effects)
 from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 
 
-(FNAME, PT_IN, PT_OUT, PT_EXP) = (
+(FNAME, PT_IN, PT_OUT, PT_EXP, OVW) = (
     'RobotDreams',
     '/Users/chipdelmal/Movies/Fingerprint',
     '/Users/chipdelmal/Movies/Fingerprint/out',
-    '/Users/chipdelmal/Movies/Fingerprint/art'
+    '/Users/chipdelmal/Movies/Fingerprint/art',
+    True
 )
 # Audio constants -------------------------------------------------------------
 (STEP, BAR_SPACING, LW, YOFFSET) = (1000, 20, 2.5, 0.075)
 (SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = ((0, 5), (0, 10), 5e3,  10, 0.2)
 # Image constants -------------------------------------------------------------
 (SFRAME, DFRAMES) = (0, 5)
-(OFFSETS, ZOOM, ROTATION) = ((-.5, -.95), 0.0125, 2)
-(FRAMES, DOMINANT, CLUSTERS, OVW) = (300, 1, 3, True)
+(OFFSETS, ZOOM, ROTATION) = ((-.5, -.95), 0.0125, 0)
+(FRAMES, DOMINANT, CLUSTERS) = (300, 1, 3)
 (CW, COFF) = (.9, 0.25)
 # Plot constants --------------------------------------------------------------
-(REVERSED, XRANGE, YRANGE) = (True, (-20, 20), (-2, 1))
+(REVERSED, XRANGE, YRANGE) = (False, (-20, 20), (-2, 1))
 ###############################################################################
 # Setup paths
 ###############################################################################
@@ -75,7 +76,8 @@ if REVERSED:
     (sndFrames, filepaths, hexList) = (
         sndFrames[::-1], filepaths[::-1], hexList[::-1]
     )
-len(filepaths)
+    SFRAME = SFRAME + DFRAMES - (len(filepaths)-1)%DFRAMES
+    ROTATION = 2
 (fig, ax) = plt.subplots(figsize=(20, 4))
 for (ix, sndHeight) in enumerate(sndFrames):
     # Plot waveform -----------------------------------------------------------
