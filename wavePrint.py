@@ -23,11 +23,11 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 (SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = ((0, 5), (0, 10), 5e3,  10, 0.2)
 # Image constants -------------------------------------------------------------
 (SFRAME, DFRAMES) = (0, 5)
-(OFFSETS, ZOOM, ROTATION) = ((-.5, -.95), 0.0125, 0)
+(OFFSETS, ZOOM, ROTATION) = ((-.5, -.85), 0.0125, 0)
 (FRAMES, DOMINANT, CLUSTERS) = (300, 1, 3)
 (CW, COFF) = (.9, 0.25)
 # Plot constants --------------------------------------------------------------
-(REVERSED, XRANGE, YRANGE) = (False, (-20, 20), (-2, 1))
+(REVERSED, XRANGE, YRANGE) = (False, (-20, 20), (-1.5, .5))
 ###############################################################################
 # Setup paths
 ###############################################################################
@@ -89,10 +89,7 @@ for (ix, sndHeight) in enumerate(sndFrames):
     )
     # Plot image --------------------------------------------------------------
     if ((SFRAME+ix)%DFRAMES==0):
-        img = np.rot90(
-            image.imread(filepaths[ix]), 
-            k=ROTATION, axes=(1, 0)
-        )
+        img = np.rot90(image.imread(filepaths[ix]), k=ROTATION, axes=(1, 0))
         imagebox = OffsetImage(img, zoom=ZOOM)
         off = OFFSETS[::][offCounter%len(OFFSETS)]       
         ab = AnnotationBbox(
