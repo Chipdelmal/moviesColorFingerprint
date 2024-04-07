@@ -18,13 +18,15 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
     '/Users/chipdelmal/Movies/Fingerprint/art'
 )
 # Audio constants -------------------------------------------------------------
-(STEP, SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = (
-    1000, 
-    (0, 5), (0, 10), 5e3,  10, 0.2
-)
+(STEP, BAR_SPACING, LW, YOFFSET) = (1000, 20, 2.5, 0.075)
+(SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = ((0, 5), (0, 10), 5e3,  10, 0.2)
 # Image constants -------------------------------------------------------------
+(SFRAME, DFRAMES) = (0, 5)
+(OFFSETS, ZOOM, ROTATION) = ((-.5, -.95), 0.0125, 2)
 (FRAMES, DOMINANT, CLUSTERS, OVW) = (300, 1, 3, True)
-(VERT, SPACING, IMGOFF) = (False, 20, 1.05)
+(CW, COFF) = (.9, 0.25)
+# Plot constants --------------------------------------------------------------
+(REVERSED, XRANGE, YRANGE) = (True, (-20, 20), (-2, 1))
 ###############################################################################
 # Setup paths
 ###############################################################################
@@ -58,7 +60,8 @@ with open(path.join(PT_OUT, FNAME+'.csv'), "w") as f:
 sound = effects.normalize(AudioSegment.from_file(f"{FVIN}.mp4", format="mp4"))
 sndArray = aud.getSoundwave(
     sound, 
-    STEP=STEP, SCALE=SCALE, CLIP=CLIP, MEAN_SIG=MEAN_SIG, ROLL_PAD=ROLL_PAD
+    STEP=STEP, SCALE=SCALE, CLIP=CLIP, 
+    MEAN_SIG=MEAN_SIG, ROLL_PAD=ROLL_PAD
 )[0]
 # Get soundframes -------------------------------------------------------------
 idx = np.round(np.linspace(0, len(sndArray)-1, FRAMES)).astype(int)
@@ -67,39 +70,43 @@ sndFrames = np.where(aFrames!=0, abs(np.sqrt(aFrames))+OFFSET, 0)
 ###############################################################################
 # Plot
 ###############################################################################
+offCounter = 0
+if REVERSED:
+    (sndFrames, filepaths, hexList) = (
+        sndFrames[::-1], filepaths[::-1], hexList[::-1]
+    )
+len(filepaths)
 (fig, ax) = plt.subplots(figsize=(20, 4))
 for (ix, sndHeight) in enumerate(sndFrames):
-    if VERT:
-        (x, y) = ([-.05, sndHeight], [ix*SPACING, ix*SPACING])
-    else:
-        (y, x) = ([-.05, sndHeight], [ix*SPACING, ix*SPACING])
     # Plot waveform -----------------------------------------------------------
+    (y, x) = ([-YOFFSET, sndHeight], [ix*BAR_SPACING, ix*BAR_SPACING])
     ax.plot(
         x, y, 
-        lw=2.5, color=hexList[ix][0], 
-        solid_capstyle='round',
-        zorder=1
+        lw=LW, color=hexList[ix][0], 
+        solid_capstyle='round', zorder=1
     )
     # Plot image --------------------------------------------------------------
-    if (ix%5==0) and (ix>=0):
-        img = np.rot90(image.imread(filepaths[ix]))
-        imagebox = OffsetImage(img, zoom=0.01)
-        off = (-0.5*IMGOFF) if (ix%2==0) else (-.95*IMGOFF)
+    if ((SFRAME+ix)%DFRAMES==0):
+        img = np.rot90(
+            image.imread(filepaths[ix]), 
+            k=ROTATION, axes=(1, 0)
+        )
+        imagebox = OffsetImage(img, zoom=ZOOM)
+        off = OFFSETS[::][offCounter%len(OFFSETS)]       
         ab = AnnotationBbox(
-            imagebox, (ix*SPACING, off-.1), frameon=False,
+            imagebox, (ix*BAR_SPACING, off), frameon=False,
             box_alignment=(0.5, 0.5), 
-            # bboxprops=dict(boxstyle='round4')
         )
         ax.add_artist(ab)
+        offCounter = offCounter + 1
         # Add callout line ----------------------------------------------------
         ax.plot(
             x, [0, off-0.1], 
-            lw=1.5, color=hexList[ix][0], 
-            solid_capstyle='round', ls=':',
-            zorder=1
+            lw=CW, color=hexList[ix][0], 
+            solid_capstyle='round', ls=':', zorder=1
         )
-ax.set_xlim(-25, sndFrames.shape[0]*SPACING+25)
-ax.set_ylim(-2.5, np.max(sndFrames)+1)
+ax.set_xlim(XRANGE[0], sndFrames.shape[0]*BAR_SPACING+XRANGE[1])
+ax.set_ylim(YRANGE[0], np.max(sndFrames)+YRANGE[1])
 ax.set_axis_off()
 fig.savefig(
     path.join(PT_EXP, FNAME+'.png'), dpi=1000,
