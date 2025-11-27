@@ -12,7 +12,7 @@ import ffmpeg
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
     (FILE, IN_PATH, OUT_PATH) = (
-        'Dune02.mp4',
+        '1992_Aladdin.mp4',
         '/Users/chipdelmal/Movies/Fingerprint/rescaled', 
         '/Users/chipdelmal/Movies/Fingerprint/frames'
     )

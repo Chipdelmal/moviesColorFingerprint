@@ -35,7 +35,7 @@ def rotate(img, angle):
     warp = cv2.warpAffine(
         img, mat, (n_width, n_height), 
         borderMode=cv2.BORDER_CONSTANT,
-        borderValue=(1,1,1)
+        borderValue=(1, 1, 1, 0)
     )
 
     return warp

@@ -1,4 +1,5 @@
 
+import cv2
 import csv
 import math
 import numpy as np
@@ -13,7 +14,7 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 
 
 (FNAME, PT_IN, PT_OUT, PT_EXP, OVW) = (
-    'Dune01',
+    '1992_Aladdin',
     '/Users/chipdelmal/Movies/Fingerprint',
     '/Users/chipdelmal/Movies/Fingerprint/out',
     '/Users/chipdelmal/Movies/Fingerprint/art',
@@ -24,9 +25,9 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 (SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = ((0, 0.5), (0, 0.5), 2.5e3,  10, 0.225)
 # Image constants -------------------------------------------------------------
 (SFRAME, DFRAMES) = (0, 5)
-(OFFSETS, ZOOM, ROTATION) = ((-.35, -.2), 0.0225, 0)
+(OFFSETS, ZOOM, ROTATION) = ((-.35, -.2), 0.0275, 0)
 (FRAMES, DOMINANT, CLUSTERS) = (350, 1, 1)
-(CW, COFF) = (.9, 0.25)
+(CW, COFF) = (.75, 0.25)
 # Plot constants --------------------------------------------------------------
 (REVERSED, XRANGE, YRANGE) = (False, (-20, 20), (-0.75, 0.1))
 ###############################################################################
@@ -123,7 +124,7 @@ OFFSETS = (22.5, 22.5)
 fig = plt.figure(figsize=(12, 12))
 ax = fig.add_subplot(111, projection='polar')
 ax.set_theta_direction(-1)
-ax.set_theta_zero_location('W')
+ax.set_theta_zero_location('S')
 offCounter = 0
 for (ix, _) in enumerate(sndFrames):
     ax.plot(
@@ -133,9 +134,16 @@ for (ix, _) in enumerate(sndFrames):
         solid_capstyle='round', zorder=1
     )
     # Plot image --------------------------------------------------------------
-    if ((SFRAME+ix)%DFRAMES==0):
-        img = np.rot90(image.imread(filepaths[ix]), k=ROTATION, axes=(1, 0))
-        img = aux.rotate(img, math.degrees(THETA[ix]))
+    if ((SFRAME+ix)%DFRAMES==0) and (ix>=0):
+        img = np.rot90(
+            image.imread(filepaths[ix], cv2.IMREAD_UNCHANGED), 
+            k=ROTATION, axes=(1, 0),
+        )
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2RGBA)
+        if ix<(sndFrames.shape[0]/2):
+            img = aux.rotate(img, 270+math.degrees(THETA[ix]))
+        else:
+            img = aux.rotate(img, 90+math.degrees(THETA[ix]))
         imagebox = OffsetImage(img, zoom=ZOOM)
         off = OFFSETS[::][offCounter%len(OFFSETS)]   
         ab = AnnotationBbox(
@@ -155,6 +163,6 @@ ax.set_axis_off()
 fig.savefig(
     path.join(PT_EXP, FNAME+'_R.png'), dpi=500,
     pad_inches=0, bbox_inches='tight',
-    transparent=False
+    transparent=True
 )
 
