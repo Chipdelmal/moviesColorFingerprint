@@ -18,6 +18,28 @@ import matplotlib.font_manager
 from IPython.core.display import HTML
 
 
+def rotate(img, angle):
+    (height, width) = img.shape[:2]
+    (cent_x, cent_y) = (width // 2, height // 2)
+
+    mat = cv2.getRotationMatrix2D((cent_x, cent_y), -angle, 1.0)
+    cos = np.abs(mat[0, 0])
+    sin = np.abs(mat[0, 1])
+
+    n_width = int((height * sin) + (width * cos))
+    n_height = int((height * cos) + (width * sin))
+
+    mat[0, 2] += (n_width / 2) - cent_x
+    mat[1, 2] += (n_height / 2) - cent_y
+
+    warp = cv2.warpAffine(
+        img, mat, (n_width, n_height), 
+        borderMode=cv2.BORDER_CONSTANT,
+        borderValue=(1,1,1)
+    )
+
+    return warp
+
 def readAndProcessImg(path):
     # Read image and convert from BGR to RGB
     bgr = cv2.imread(path)

@@ -12,14 +12,14 @@ import ffmpeg
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
     (FILE, IN_PATH, OUT_PATH) = (
-        'Episode09.mp4',
+        'Dune02.mp4',
         '/Users/chipdelmal/Movies/Fingerprint/rescaled', 
         '/Users/chipdelmal/Movies/Fingerprint/frames'
     )
 else:
     (FILE, FRAMES_NUM) = (sys.argv[1], int(sys.argv[2]))
     (IN_PATH, OUT_PATH) = (sys.argv[3], sys.argv[4])
-(FRAMES_NUM, OVW, SIZE) = (300, True, (1692, 720))
+(FRAMES_NUM, OVW, SIZE) = (350, True, (1400, 720))
 # Output path -----------------------------------------------------------------
 pthStr = FILE.split(".")[0]
 OUT_PATH = path.join(OUT_PATH, pthStr)

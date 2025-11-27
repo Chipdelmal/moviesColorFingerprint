@@ -12,17 +12,17 @@ import auxiliary as aux
 import pickle as pkl
 import csv
 
-JOBS = multiprocessing.cpu_count()
+JOBS = 1 # multiprocessing.cpu_count()
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
     # For testing and debugging in jupyter ------------------------------------
     (FILE, DOMINANT, CLUSTERS, FRAMES, DPI) = (
-        "1953_PeterPan", 1, 3, 3600, 1250
+        "TMNT", 1, 3, 3600, 1250
     )
     (IN_PATH, OUT_PATH, TITLE) = (
-        "/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Frames", 
-        "/media/chipdelmal/c158f7c2-ba1a-4b6b-9428-6f4babaa84d1/Disney/Art",
-        "Peter Pan"
+        "/Users/chipdelmal/Documents/GitHub/moviesColorFingerprint/Frames/", 
+        "/Users/chipdelmal/Documents/GitHub/moviesColorFingerprint/Art/",
+        "TMNT"
     )
 else:
     # For calls from the terminal ---------------------------------------------
@@ -34,7 +34,7 @@ else:
         sys.argv[6], sys.argv[7], sys.argv[8]
     )
     TITLE = bytes(TITLE, "utf-8").decode("unicode_escape")
-(STRIP, OVW) = (False, False)
+(STRIP, OVW) = (True, False)
 # Get frames paths and calculate the dominant clusters of the images ----------
 IN_PATH = path.join(IN_PATH, FILE)
 filepaths = aux.getFilepaths(IN_PATH, FILE)
@@ -44,8 +44,8 @@ if path.isfile(pklFile):
         clusters = pkl.load(f)
 else:
     clusters = aux.parallelDominantImage(
-        filepaths, DOMINANT, CLUSTERS, 
-        maxIter=100, VERBOSE=True, jobs=8
+        filepaths[:], DOMINANT, CLUSTERS, 
+        maxIter=100, VERBOSE=True, jobs=JOBS
     )
 # clusters = aux.calculateDominantColors(filepaths, DOMINANT, CLUSTERS)
 # Export the resulting fingerprints -------------------------------------------
@@ -63,10 +63,10 @@ if not path.isfile(path.join(OUT_PATH, FILE+'.png')) or OVW:
     else:
         aux.exportFingerprintPlot(
             OUT_PATH, FILE+'.png', clusters, dpi=DPI, 
-            aspect=35,# FRAMES/DOMINANT, 
+            aspect=10,# FRAMES/DOMINANT, 
             movieTitle=' '+str(TITLE).format(), fontsize=3, 
             fontfamily='Liberation Sans Narrow', # fontfamily='Gotham XLight', 
-            color='#ffffff', textpos=(-.12, 0.475),
+            color='#000000', textpos=(-.12, 0.475),
             facecolor='#000000FF', 
             hspan=(0, 0), halign='left', valign='center'
         )
