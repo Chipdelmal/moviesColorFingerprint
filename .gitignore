@@ -3,6 +3,7 @@
 *.mp4
 *.png
 temp/*.jpg
+*.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
