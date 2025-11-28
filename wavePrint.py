@@ -13,8 +13,9 @@ from pydub import (AudioSegment, effects)
 from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 
 
-(FNAME, PT_IN, PT_OUT, PT_EXP, OVW) = (
-    '1992_Aladdin',
+(FNAME, TITLE, PT_IN, PT_OUT, PT_EXP, OVW) = (
+    'RogueOne', 
+    'Rogue\nOne',
     '/Users/chipdelmal/Movies/Fingerprint',
     '/Users/chipdelmal/Movies/Fingerprint/out',
     '/Users/chipdelmal/Movies/Fingerprint/art',
@@ -22,7 +23,7 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 )
 # Audio constants -------------------------------------------------------------
 (STEP, BAR_SPACING, LW, YOFFSET) = (1000, 20, 2.5, 0.075)
-(SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = ((0, 0.5), (0, 0.5), 2.5e3,  10, 0.225)
+(SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = ((0, 0.25), (0, 0.5), 2.5e3,  10, 0.225)
 # Image constants -------------------------------------------------------------
 (SFRAME, DFRAMES) = (0, 5)
 (OFFSETS, ZOOM, ROTATION) = ((-.35, -.2), 0.0275, 0)
@@ -120,6 +121,10 @@ sndFrames = np.where(aFrames!=0, abs(np.sqrt(aFrames))+OFFSET, 0)
 RADIUS = 10
 THETA = np.linspace(0, 2*np.pi, sndFrames.shape[0])
 OFFSETS = (22.5, 22.5)
+MCOLOR = np.median(
+    np.array([np.array(aux.hex_to_rgb(i[0])) for i in hexList]),
+    axis=0
+)/255
 
 fig = plt.figure(figsize=(12, 12))
 ax = fig.add_subplot(111, projection='polar')
@@ -159,10 +164,17 @@ for (ix, _) in enumerate(sndFrames):
             lw=CW, color=hexList[ix][0], 
             solid_capstyle='round', ls=':', zorder=1
         )
+    ax.text(
+        0, 0, TITLE,
+        ha='center', va='center',
+        # color=MCOLOR,
+        color='#22222255',
+        fontsize=40,
+        fontfamily='Phosphate'
+    )
 ax.set_axis_off()       
 fig.savefig(
     path.join(PT_EXP, FNAME+'_R.png'), dpi=500,
     pad_inches=0, bbox_inches='tight',
     transparent=True
 )
-

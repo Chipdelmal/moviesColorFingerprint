@@ -73,8 +73,9 @@ def dominantImage(
     frequencies = {
         key: len(list(group)) for key, group in groupby(sorted(kmeans.labels_))
     }
+    # print(frequencies)
     dominant = dict(
-        sorted(frequencies.items(), key = itemgetter(1), reverse = True
+        sorted(frequencies.items(), key=itemgetter(1), reverse=True
     )[:domColNum])
     dominantKeys = list(dominant.keys())
     palette = [kmeans.cluster_centers_[j] for j in dominantKeys]

@@ -12,7 +12,7 @@ import ffmpeg
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
     (FILE, IN_PATH, OUT_PATH) = (
-        '1992_Aladdin.mp4',
+        'Frozen'+'.mp4',
         '/Users/chipdelmal/Movies/Fingerprint/rescaled', 
         '/Users/chipdelmal/Movies/Fingerprint/frames'
     )
@@ -37,7 +37,7 @@ fps = FRAMES_NUM / framesNumMovie * framerate
 # Export frames ---------------------------------------------------------------
 if (not folderExists) or (OVW):
     os.system(
-        "ffmpeg -loglevel panic "
+        "ffmpeg -loglevel info "
         + "-i " + path.join(IN_PATH, FILE) + " "
         + "-vf fps=" + str(fps) + " "
         + f"-s {SIZE[0]}x{SIZE[1]} "
