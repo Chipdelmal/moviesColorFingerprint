@@ -14,23 +14,27 @@ from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 
 
 (FNAME, TITLE, PT_IN, PT_OUT, PT_EXP, OVW) = (
-    'RogueOne', 
-    'Rogue\nOne',
+    'Barbie', 
+    'Barbie',
     '/Users/chipdelmal/Movies/Fingerprint',
     '/Users/chipdelmal/Movies/Fingerprint/out',
     '/Users/chipdelmal/Movies/Fingerprint/art',
     True
 )
-# Audio constants -------------------------------------------------------------
-(STEP, BAR_SPACING, LW, YOFFSET) = (1000, 20, 2.5, 0.075)
-(SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = ((0, 0.25), (0, 0.5), 2.5e3,  10, 0.225)
 # Image constants -------------------------------------------------------------
+(FRAMES, DOMINANT, CLUSTERS) = (350, 1, 3)
 (SFRAME, DFRAMES) = (0, 5)
-(OFFSETS, ZOOM, ROTATION) = ((-.35, -.2), 0.0275, 0)
-(FRAMES, DOMINANT, CLUSTERS) = (350, 1, 1)
+(OFFSETS, ZOOM, ROTATION) = ((-.3, -.2), 0.0275, 0)
 (CW, COFF) = (.75, 0.25)
 # Plot constants --------------------------------------------------------------
 (REVERSED, XRANGE, YRANGE) = (False, (-20, 20), (-0.75, 0.1))
+# Audio constants -------------------------------------------------------------
+(STEP, BAR_SPACING, LW, YOFFSET) = (1000, 20, 2.5, 0.075)
+(SCALE, CLIP, MEAN_SIG, ROLL_PAD, OFFSET) = (
+    (0, 0.25), 
+    (0, 0.5), 
+    5e3,  10, 0.1
+)
 ###############################################################################
 # Setup paths
 ###############################################################################
@@ -69,63 +73,67 @@ sndArray = aud.getSoundwave(
 )[0]
 # Get soundframes -------------------------------------------------------------
 idx = np.round(np.linspace(0, len(sndArray)-1, FRAMES)).astype(int)
-aFrames = sndArray[idx]
-sndFrames = np.where(aFrames!=0, abs(np.sqrt(aFrames))+OFFSET, 0)
+delta = int((idx[1]-idx[0])/2)
+aHead = [np.mean(sndArray[0:delta])]
+aBody = [np.mean(sndArray[int(f-delta):int(f+delta)]) for f in idx[1:-1]]
+aTail = [np.mean(sndArray[-delta:-1])]
+aFrames = np.array(aHead+aBody+aTail)
+# aFrames = sndArray[idx]
+sndFrames = np.where(aFrames!=0, abs(np.sqrt(aFrames))+OFFSET, 0.025)
 ###############################################################################
 # Plot Strip
 ###############################################################################
-# offCounter = 0
-# if REVERSED:
-#     (sndFrames, filepaths, hexList) = (
-#         sndFrames[::-1], filepaths[::-1], hexList[::-1]
-#     )
-#     SFRAME = SFRAME + DFRAMES - (len(filepaths)-1)%DFRAMES
-#     ROTATION = 2
-# (fig, ax) = plt.subplots(figsize=(20, 4))
-# for (ix, sndHeight) in enumerate(sndFrames):
-#     # Plot waveform -----------------------------------------------------------
-#     (y, x) = ([-YOFFSET, sndHeight], [ix*BAR_SPACING, ix*BAR_SPACING])
-#     ax.plot(
-#         x, y, 
-#         lw=LW, color=hexList[ix][0], 
-#         solid_capstyle='round', zorder=1
-#     )
-#     # Plot image --------------------------------------------------------------
-#     if ((SFRAME+ix)%DFRAMES==0):
-#         img = np.rot90(image.imread(filepaths[ix]), k=ROTATION, axes=(1, 0))
-#         imagebox = OffsetImage(img, zoom=ZOOM)
-#         off = OFFSETS[::][offCounter%len(OFFSETS)]       
-#         ab = AnnotationBbox(
-#             imagebox, (ix*BAR_SPACING, off), frameon=False,
-#             box_alignment=(0.5, 0.5), 
-#         )
-#         ax.add_artist(ab)
-#         offCounter = offCounter + 1
-#         # Add callout line ----------------------------------------------------
-#         ax.plot(
-#             x, [0, off], 
-#             lw=CW, color=hexList[ix][0], 
-#             solid_capstyle='round', ls=':', zorder=1
-#         )
-# ax.set_xlim(XRANGE[0], sndFrames.shape[0]*BAR_SPACING+XRANGE[1])
-# ax.set_ylim(YRANGE[0], np.max(sndFrames)+YRANGE[1])
-# ax.set_axis_off()
-# fig.savefig(
-#     path.join(PT_EXP, FNAME+'.png'), dpi=1000,
-#     pad_inches=0, bbox_inches='tight',
-#     transparent=True
-# )
+offCounter = 0
+if REVERSED:
+    (sndFrames, filepaths, hexList) = (
+        sndFrames[::-1], filepaths[::-1], hexList[::-1]
+    )
+    SFRAME = SFRAME + DFRAMES - (len(filepaths)-1)%DFRAMES
+    ROTATION = 2
+(fig, ax) = plt.subplots(figsize=(20, 4))
+for (ix, sndHeight) in enumerate(sndFrames):
+    # Plot waveform -----------------------------------------------------------
+    (y, x) = ([-YOFFSET, sndHeight], [ix*BAR_SPACING, ix*BAR_SPACING])
+    ax.plot(
+        x, y, 
+        lw=LW, color=hexList[ix][0], 
+        solid_capstyle='round', zorder=1
+    )
+    # Plot image --------------------------------------------------------------
+    if ((SFRAME+ix)%DFRAMES==0):
+        img = np.rot90(image.imread(filepaths[ix]), k=ROTATION, axes=(1, 0))
+        imagebox = OffsetImage(img, zoom=ZOOM/1.5)
+        off = OFFSETS[::][offCounter%len(OFFSETS)]       
+        ab = AnnotationBbox(
+            imagebox, (ix*BAR_SPACING, off), frameon=False,
+            box_alignment=(0.5, 0.5), 
+        )
+        ax.add_artist(ab)
+        offCounter = offCounter + 1
+        # Add callout line ----------------------------------------------------
+        ax.plot(
+            x, [0, off], 
+            lw=CW, color=hexList[ix][0], 
+            solid_capstyle='round', ls=':', zorder=1
+        )
+ax.set_xlim(XRANGE[0], sndFrames.shape[0]*BAR_SPACING+XRANGE[1])
+ax.set_ylim(YRANGE[0], np.max(sndFrames)+YRANGE[1])
+ax.set_axis_off()
+fig.savefig(
+    path.join(PT_EXP, FNAME+'.png'), dpi=300,
+    pad_inches=0, bbox_inches='tight',
+    transparent=False
+)
 ###############################################################################
 # Plot Radial
 ###############################################################################
-RADIUS = 10
+RADIUS = 8
+OFFSETS = (18, 18)
 THETA = np.linspace(0, 2*np.pi, sndFrames.shape[0])
-OFFSETS = (22.5, 22.5)
 MCOLOR = np.median(
     np.array([np.array(aux.hex_to_rgb(i[0])) for i in hexList]),
     axis=0
 )/255
-
 fig = plt.figure(figsize=(12, 12))
 ax = fig.add_subplot(111, projection='polar')
 ax.set_theta_direction(-1)
@@ -174,7 +182,7 @@ for (ix, _) in enumerate(sndFrames):
     )
 ax.set_axis_off()       
 fig.savefig(
-    path.join(PT_EXP, FNAME+'_R.png'), dpi=500,
+    path.join(PT_EXP, FNAME+'_R.png'), dpi=300,
     pad_inches=0, bbox_inches='tight',
-    transparent=True
+    transparent=False
 )

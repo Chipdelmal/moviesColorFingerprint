@@ -12,7 +12,7 @@ import ffmpeg
 # User inputs -----------------------------------------------------------------
 if aux.isNotebook():
     (FILE, IN_PATH, OUT_PATH) = (
-        'Frozen'+'.mp4',
+        'Barbie'+'.mp4',
         '/Users/chipdelmal/Movies/Fingerprint/rescaled', 
         '/Users/chipdelmal/Movies/Fingerprint/frames'
     )
@@ -33,7 +33,7 @@ probe = ffmpeg.probe(path.join(IN_PATH, FILE))
 vInfo = next(s for s in probe['streams'] if s['codec_type'] == 'video')
 framesNumMovie = int(vInfo['nb_frames'])
 framerate = eval(vInfo['avg_frame_rate'])
-fps = FRAMES_NUM / framesNumMovie * framerate
+fps = FRAMES_NUM/framesNumMovie*framerate
 # Export frames ---------------------------------------------------------------
 if (not folderExists) or (OVW):
     os.system(
